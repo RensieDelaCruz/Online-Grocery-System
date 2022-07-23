@@ -3,6 +3,8 @@ package com.grocerysystem.forms;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -22,6 +24,7 @@ public class ViewCartPanel extends JPanel {
 
 	static DefaultTableModel model;
 	static Object[] row;
+	
 
 	public ViewCartPanel() {
 		// Checkout Button
@@ -31,6 +34,14 @@ public class ViewCartPanel extends JPanel {
 		checkOutBttn.setFocusable(false);
 		checkOutBttn.setBorder(BorderFactory.createEtchedBorder(20, Color.GRAY, Color.LIGHT_GRAY));
 		checkOutBttn.setBounds(300, 500, 100, 20);
+		checkOutBttn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new CheckoutForm();
+				MainForm.getInstance().setVisible(false);
+			}
+		});
 
 		// Subtotal, Tax and Total Label
 		subTotalLabel = new JLabel("Subtotal: ");
