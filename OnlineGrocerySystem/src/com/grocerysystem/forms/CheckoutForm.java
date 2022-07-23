@@ -31,16 +31,24 @@ public class CheckoutForm extends JFrame implements ItemListener {
 			cvvTextBox;
 	private JRadioButton creditCardButton, cashOnDeliveryButton;
 	private ButtonGroup buttonGroup;
-	private JButton checkOutButton;
+	private JButton checkOutButton, cancelButton;
 
 	public CheckoutForm() {
+		// cancel button
+		cancelButton = new JButton("Cancel");
+		cancelButton.setBackground(Color.white);
+		cancelButton.setForeground(new Color(210, 105, 30));
+		cancelButton.setFocusable(false);
+		cancelButton.setBorder(BorderFactory.createEtchedBorder(20, Color.GRAY, Color.LIGHT_GRAY));
+		cancelButton.setBounds(350, 550, 100, 20);
+		
 		// checkOutButton
 		checkOutButton = new JButton("Checkout");
 		checkOutButton.setBackground(Color.white);
 		checkOutButton.setForeground(new Color(210, 105, 30));
 		checkOutButton.setFocusable(false);
 		checkOutButton.setBorder(BorderFactory.createEtchedBorder(20, Color.GRAY, Color.LIGHT_GRAY));
-		checkOutButton.setBounds(275, 550, 100, 20);
+		checkOutButton.setBounds(220, 550, 100, 20);
 
 		// Credit Card Label and textbox
 		creditCardNumberLabel = new JLabel("Credit Card Number");
@@ -180,11 +188,12 @@ public class CheckoutForm extends JFrame implements ItemListener {
 		centerPanel.add(cashOnDeliveryButton);
 		centerPanel.add(creditCardPanel);
 		centerPanel.add(checkOutButton);
+		centerPanel.add(cancelButton);
 
 		// Checkout Frame
 		ImageIcon mainIcon = new ImageIcon(getClass().getResource("/images/Cart Icon.jpg"));
 		this.setTitle("Organic Grocery Store - Checkout");
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		this.setSize(700, 700);
 		this.setResizable(false);
 		this.setIconImage(mainIcon.getImage());
