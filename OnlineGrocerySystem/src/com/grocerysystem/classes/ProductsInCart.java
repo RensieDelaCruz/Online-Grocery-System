@@ -66,14 +66,14 @@ public class ProductsInCart {
 		if (productsInCart.size() > 0) {
 			for (ProductsInCart p : productsInCart) {
 				cartSubTotal += p.getSubtotal();
-				MainForm.subTotalLabel.setText("Subtotal: " + String.format("%.2f", getCartSubtotal()));;
-				ViewCartPanel.subTotalLabel.setText("Subtotal: " + String.format("%.2f", getCartSubtotal()));;
+				MainForm.subTotalLabel.setText("Subtotal: " + String.format("%.2f", getCartSubtotal()));
+				ViewCartPanel.subTotalLabel.setText("Subtotal: " + String.format("%.2f", getCartSubtotal()));
 				ViewCartPanel.taxLabel.setText("Tax: " + String.format("%.2f", getCalculatedTax()));
 				ViewCartPanel.totalLabel.setText("Total: " + String.format("%.2f", getCalculatedTax() + getCartSubtotal()));
 			}
 		} else {
 			MainForm.subTotalLabel.setText("Subtotal: " + String.format("%.2f", getCartSubtotal()));
-			ViewCartPanel.subTotalLabel.setText("Subtotal: " + String.format("%.2f", getCartSubtotal()));;
+			ViewCartPanel.subTotalLabel.setText("Subtotal: " + String.format("%.2f", getCartSubtotal()));
 			ViewCartPanel.taxLabel.setText("Tax: " + String.format("%.2f", getCalculatedTax()));
 			ViewCartPanel.totalLabel.setText("Total: " + String.format("%.2f", getCalculatedTax() + getCartSubtotal()));
 		}
