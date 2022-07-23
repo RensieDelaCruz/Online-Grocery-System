@@ -30,7 +30,7 @@ import com.grocerysystem.classes.User;
 
 public class MainForm extends JFrame implements ActionListener {
 
-	private JPanel departmentsPanel, headerPanel, exPanel, centerPanel;
+	private JPanel departmentsPanel, headerPanel, centerPanel;
 	private JLabel departmentsLabel;
 	public static JLabel subTotalLabel;
 	private JButton meatsBttn, seafoodBttn, fruitsBttn, veggiesBttn, dairyBttn, eggBttn, viewCartBttn,
@@ -39,7 +39,6 @@ public class MainForm extends JFrame implements ActionListener {
 			eggScrollPane;
 	private CardLayout cards;
 	private Cursor cursor;
-	private JTable viewCartTable;
 
 	private MeatPanel meatPanel = new MeatPanel();
 	private SeafoodPanel seafoodPanel = new SeafoodPanel();
@@ -52,11 +51,13 @@ public class MainForm extends JFrame implements ActionListener {
 	private ViewOrderHistoryPanel viewOrderHistoryPanel = new ViewOrderHistoryPanel();
 
 	private User user;
-	private List<Product> productsList = Product.getProductList();
 	protected JButton manageBttn;
 	protected JLabel welcomeLabel;
 
+	private static MainForm main;
+
 	public MainForm(User user) {
+		main = this;
 		this.user = user;
 
 		// cursor for buttons
@@ -178,7 +179,7 @@ public class MainForm extends JFrame implements ActionListener {
 		subTotalLabel.setBounds(760, 60, 200, 20);
 
 		welcomeLabel = new JLabel();
-		if(this.user instanceof Customer)
+		if (this.user instanceof Customer)
 			welcomeLabel.setText("Welcome " + ((Customer) user).getFirstName());
 		else
 			welcomeLabel.setText("Welcome " + ((Administrator) user).getFirstName());
@@ -297,6 +298,13 @@ public class MainForm extends JFrame implements ActionListener {
 		if (e.getSource() == manageBttn) {
 			new ManageInventoryForm();
 		}
+	}
+
+	// getInstance() method that will return this instance of MainFrame and use it
+	// as a reference in Checkout Form to hide it everytime the user open the check
+	// out form.
+	public static MainForm getInstance() {
+		return main;
 	}
 
 }
