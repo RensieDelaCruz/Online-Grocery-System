@@ -1,0 +1,21 @@
+package com.grocerysystem.classes;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class DatabaseConnect {
+	
+	private static String url = "jdbc:mysql://localhost:3306/grocerymanagementsystem";
+   	private static String username = "root";
+   	private static String password = "R.10071998";
+
+	//method that returns Connection to the database
+   	public static Connection getConnection() throws SQLException {
+   		Connection conn = DriverManager.getConnection(url, username, password);
+   		return conn;
+   	}
+	
+}
