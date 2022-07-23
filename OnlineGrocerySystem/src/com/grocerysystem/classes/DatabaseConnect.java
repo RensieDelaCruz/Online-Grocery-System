@@ -15,7 +15,7 @@ public class DatabaseConnect {
 	//method that returns Connection to the database
    	public static Connection getConnection() throws SQLException {
    		Connection conn = DriverManager.getConnection(url, username, password);
-   		System.out.println("connected");
+   
    		return conn;
    	}
 	
