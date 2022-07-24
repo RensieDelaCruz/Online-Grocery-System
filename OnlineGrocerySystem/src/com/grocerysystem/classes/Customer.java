@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class Customer implements User {
 
-	private int customerID;
+	private int userID;
 	private String firstName, lastName, customerStreetAddress, customerCityAddress, customerStateAddress,
 			customerEmailAddress;
 	private static Customer customer;
@@ -39,7 +39,6 @@ public class Customer implements User {
 			String customerEmailAddress) {
 		try (Connection conn = DatabaseConnect.getConnection()) {
 			String newUserQuery = "INSERT INTO user (username, password, user_type) VALUES (?, ?, 'C')";
-			int userID = 0;
 			PreparedStatement stmt1 = conn.prepareStatement(newUserQuery);
 			stmt1.setString(1, userName);
 			stmt1.setString(2, userPassword);
@@ -166,6 +165,14 @@ public class Customer implements User {
 	}
 
 	// getters and setters
+	public int getUserID() {
+		return userID;
+	}
+	
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
+	
 	public String getFirstName() {
 		return firstName;
 	}
