@@ -9,11 +9,14 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
+
+import com.grocerysystem.classes.ProductsInCart;
 
 public class ViewCartPanel extends JPanel {
 
@@ -34,11 +37,15 @@ public class ViewCartPanel extends JPanel {
 		checkOutBttn.setBorder(BorderFactory.createEtchedBorder(20, Color.GRAY, Color.LIGHT_GRAY));
 		checkOutBttn.setBounds(300, 500, 100, 20);
 		checkOutBttn.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new CheckoutForm();
-				MainForm.getInstance().setVisible(false);
+				if (ProductsInCart.getProductsInCart().size() > 0) {
+					new CheckoutForm();
+					MainForm.getInstance().setVisible(false);
+				}else
+					JOptionPane.showMessageDialog(null, "Your Cart is Empty!", "Error",
+							JOptionPane.ERROR_MESSAGE);
 			}
 		});
 
@@ -53,7 +60,6 @@ public class ViewCartPanel extends JPanel {
 		totalLabel.setFont(new Font("Arial Black", Font.BOLD, 15));
 		totalLabel.setBounds(30, 425, 200, 20);
 
-		
 		// Cart Table
 		ViewCartTableModel model = new ViewCartTableModel();
 		cartTable = new JTable(model);
