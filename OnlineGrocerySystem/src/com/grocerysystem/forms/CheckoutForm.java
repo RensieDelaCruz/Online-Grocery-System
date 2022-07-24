@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -20,7 +22,7 @@ import javax.swing.JTextField;
 
 import com.grocerysystem.classes.ProductsInCart;
 
-public class CheckoutForm extends JFrame implements ItemListener {
+public class CheckoutForm extends JFrame implements ItemListener, ActionListener {
 
 	private JPanel centerPanel, creditCardPanel;
 	private JLabel checkoutLabel, subTotalLabel, taxLabel, totalLabel, cartSummaryLabel, shippingAddressLabel,
@@ -41,6 +43,7 @@ public class CheckoutForm extends JFrame implements ItemListener {
 		cancelButton.setFocusable(false);
 		cancelButton.setBorder(BorderFactory.createEtchedBorder(20, Color.GRAY, Color.LIGHT_GRAY));
 		cancelButton.setBounds(350, 550, 100, 20);
+		cancelButton.addActionListener(this);
 		
 		// checkOutButton
 		checkOutButton = new JButton("Checkout");
@@ -151,7 +154,7 @@ public class CheckoutForm extends JFrame implements ItemListener {
 		taxLabel = new JLabel("Tax: " + String.format("%.2f", ProductsInCart.getCalculatedTax()));
 		taxLabel.setFont(new Font("Arial Black", Font.BOLD, 15));
 		taxLabel.setBounds(30, 110, 200, 18);
-		totalLabel = new JLabel("Total: " + String.format("%.2f", ProductsInCart.getCalculatedTax()));
+		totalLabel = new JLabel("Total: " + String.format("%.2f", ProductsInCart.getCalculatedTax() + ProductsInCart.getCartSubtotal()));
 		totalLabel.setFont(new Font("Arial Black", Font.BOLD, 15));
 		totalLabel.setBounds(30, 135, 200, 18);
 
@@ -213,5 +216,13 @@ public class CheckoutForm extends JFrame implements ItemListener {
 				creditCardPanel.setVisible(false);
 		}
 
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == cancelButton) {
+			this.setVisible(false);
+			MainForm.getInstance().setVisible(true);
+		}	
 	}
 }
