@@ -200,7 +200,6 @@ public class CheckoutForm extends JFrame implements ItemListener {
 		this.getContentPane().setBackground(new Color(200, 100, 100));
 		this.setLayout(new BorderLayout(30, 10));
 		this.setVisible(true);
-
 		this.add(centerPanel);
 
 	}
