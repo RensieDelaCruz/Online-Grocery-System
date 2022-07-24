@@ -209,7 +209,7 @@ public class RegistrationForm extends JFrame implements ActionListener {
 	// to check if the username is unique
 	private boolean isUsernameUnique() {
 		boolean uniqueUsername = false;
-		uniqueUsername = customer.checkUsername(userTextBox.getText());
+		uniqueUsername = Customer.checkUsername(userTextBox.getText());
 		if (!uniqueUsername) {
 			userAIU.setVisible(true);
 		} else {
