@@ -84,6 +84,15 @@ public class ProductsInCart {
 		calculatedTax = (double) getCartSubtotal() * .13;
 		return calculatedTax;
 	}
+	
+	// method to get total number of items in the cart
+	public static int getTotalItemsInCart() {
+		int numberOfItemsInCart = 0;
+		for(ProductsInCart p: productsInCart) {
+			numberOfItemsInCart += p.quantity;
+		}
+		return numberOfItemsInCart;
+	}
 
 	// getters and setters
 
