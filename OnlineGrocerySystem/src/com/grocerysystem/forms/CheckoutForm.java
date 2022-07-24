@@ -20,17 +20,19 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import com.grocerysystem.classes.CreditCard;
+import com.grocerysystem.classes.Customer;
 import com.grocerysystem.classes.ProductsInCart;
 
 public class CheckoutForm extends JFrame implements ItemListener, ActionListener {
 
 	private JPanel centerPanel, creditCardPanel;
 	private JLabel checkoutLabel, subTotalLabel, taxLabel, totalLabel, cartSummaryLabel, shippingAddressLabel,
-			streetAddressLabel, cityLabel, postalLabel, stateLabel, emailAddressLabel, paymentLabel, paymentMethodLabel,
-			creditCardNumberLabel, expiryDateLabel, cvvLabel;
+			streetAddressLabel, cityLabel, postalLabel, stateLabel, phoneNumberLabel, paymentLabel, paymentMethodLabel,
+			creditCardNumberLabel, expiryDateLabel, cvvLabel, nameOnCreditCardLabel;
 	private JComboBox<String> stateComboBox;
-	private JTextField streetAddTextBox, cityTextBox, postalTextBox, emailTextbox, creditCardTexBox, expiryTextBox,
-			cvvTextBox;
+	private JTextField streetAddTextBox, cityTextBox, postalTextBox, phoneTextbox, creditCardTexBox, expiryTextBox,
+			cvvTextBox, nameTextBox;
 	private JRadioButton creditCardButton, cashOnDeliveryButton;
 	private ButtonGroup buttonGroup;
 	private JButton checkOutButton, cancelButton;
@@ -42,41 +44,49 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 		cancelButton.setForeground(new Color(210, 105, 30));
 		cancelButton.setFocusable(false);
 		cancelButton.setBorder(BorderFactory.createEtchedBorder(20, Color.GRAY, Color.LIGHT_GRAY));
-		cancelButton.setBounds(350, 550, 100, 20);
+		cancelButton.setBounds(350, 570, 100, 20);
 		cancelButton.addActionListener(this);
-		
+
 		// checkOutButton
 		checkOutButton = new JButton("Checkout");
 		checkOutButton.setBackground(Color.white);
 		checkOutButton.setForeground(new Color(210, 105, 30));
 		checkOutButton.setFocusable(false);
 		checkOutButton.setBorder(BorderFactory.createEtchedBorder(20, Color.GRAY, Color.LIGHT_GRAY));
-		checkOutButton.setBounds(220, 550, 100, 20);
+		checkOutButton.setBounds(220, 570, 100, 20);
+		checkOutButton.addActionListener(this);
 
 		// Credit Card Label and textbox
+		nameOnCreditCardLabel = new JLabel("Name on Credit Card");
+		nameOnCreditCardLabel.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		nameOnCreditCardLabel.setBounds(10, 10, 200, 20);
+		nameTextBox = new JTextField("John Doe");
+		nameTextBox.setBounds(200, 10, 150, 20);
 		creditCardNumberLabel = new JLabel("Credit Card Number");
 		creditCardNumberLabel.setFont(new Font("Arial Black", Font.PLAIN, 15));
-		creditCardNumberLabel.setBounds(10, 10, 200, 20);
-		creditCardTexBox = new JTextField("0000 000 0000 0000");
-		creditCardTexBox.setBounds(180, 10, 200, 20);
+		creditCardNumberLabel.setBounds(10, 35, 200, 20);
+		creditCardTexBox = new JTextField("0000000000000000");
+		creditCardTexBox.setBounds(200, 35, 150, 20);
 		expiryDateLabel = new JLabel("Expiry Date");
 		expiryDateLabel.setFont(new Font("Arial Black", Font.PLAIN, 15));
-		expiryDateLabel.setBounds(10, 40, 200, 20);
+		expiryDateLabel.setBounds(10, 60, 200, 20);
 		expiryTextBox = new JTextField("MM/YY");
-		expiryTextBox.setBounds(180, 40, 100, 20);
+		expiryTextBox.setBounds(200, 60, 100, 20);
 		cvvLabel = new JLabel("CVV");
 		cvvLabel.setFont(new Font("Arial Black", Font.PLAIN, 15));
-		cvvLabel.setBounds(10, 70, 200, 20);
-		cvvTextBox = new JTextField("000");
-		cvvTextBox.setBounds(180, 70, 50, 20);
+		cvvLabel.setBounds(10, 90, 200, 20);
+		cvvTextBox = new JTextField();
+		cvvTextBox.setBounds(200, 90, 50, 20);
 
 		// Credit Card panel
 		creditCardPanel = new JPanel();
 		creditCardPanel.setPreferredSize(new Dimension(100, 100));
-		creditCardPanel.setBounds(30, 430, 600, 100);
+		creditCardPanel.setBounds(30, 430, 600, 120);
 		creditCardPanel.setVisible(false);
 		creditCardPanel.setBackground(Color.white);
 		creditCardPanel.setLayout(null);
+		creditCardPanel.add(nameOnCreditCardLabel);
+		creditCardPanel.add(nameTextBox);
 		creditCardPanel.add(creditCardNumberLabel);
 		creditCardPanel.add(creditCardTexBox);
 		creditCardPanel.add(expiryDateLabel);
@@ -94,12 +104,14 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 		creditCardButton.setFocusable(false);
 		creditCardButton.setBackground(null);
 		creditCardButton.addItemListener(this);
+		creditCardButton.setActionCommand("Credit Card");
 		cashOnDeliveryButton = new JRadioButton("Cash on Delivery");
 		cashOnDeliveryButton.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		cashOnDeliveryButton.setBounds(450, 390, 200, 20);
 		cashOnDeliveryButton.setFocusable(false);
 		cashOnDeliveryButton.setBackground(null);
 		cashOnDeliveryButton.addItemListener(this);
+		cashOnDeliveryButton.setActionCommand("Cash On Delivery");
 		buttonGroup = new ButtonGroup();
 		buttonGroup.add(creditCardButton);
 		buttonGroup.add(cashOnDeliveryButton);
@@ -113,48 +125,49 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 		// Address Form
 		streetAddressLabel = new JLabel("Street Address");
 		streetAddressLabel.setFont(new Font("Arial Black", Font.PLAIN, 15));
-		streetAddressLabel.setBounds(30, 230, 150, 15);
+		streetAddressLabel.setBounds(30, 210, 150, 15);
 		streetAddTextBox = new JTextField();
-		streetAddTextBox.setBounds(160, 225, 200, 20);
+		streetAddTextBox.setBounds(160, 205, 200, 20);
 		cityLabel = new JLabel("City");
 		cityLabel.setFont(new Font("Arial Black", Font.PLAIN, 15));
-		cityLabel.setBounds(400, 225, 150, 20);
+		cityLabel.setBounds(30, 235, 150, 20);
 		cityTextBox = new JTextField();
-		cityTextBox.setBounds(450, 225, 200, 20);
+		cityTextBox.setBounds(70, 235, 200, 20);
 		postalLabel = new JLabel("Postal Code");
 		postalLabel.setFont(new Font("Arial Black", Font.PLAIN, 15));
-		postalLabel.setBounds(30, 265, 150, 15);
+		postalLabel.setBounds(30, 268, 150, 15);
 		postalTextBox = new JTextField();
-		postalTextBox.setBounds(140, 260, 150, 20);
+		postalTextBox.setBounds(140, 265, 150, 20);
 		stateLabel = new JLabel("State");
 		stateLabel.setFont(new Font("Arial Black", Font.PLAIN, 15));
-		stateLabel.setBounds(320, 263, 150, 15);
+		stateLabel.setBounds(450, 240, 150, 15);
 		String[] state = { "NL", "PE", "NS", "NB", "QC", "ON", "MB", "SK", "AB", "BC", "YT", "NT", "NU" };
 		stateComboBox = new JComboBox<String>(state);
-		stateComboBox.setBounds(370, 260, 50, 20);
-		emailAddressLabel = new JLabel("Email Address");
-		emailAddressLabel.setFont(new Font("Arial Black", Font.PLAIN, 15));
-		emailAddressLabel.setBounds(30, 300, 150, 15);
-		emailTextbox = new JTextField();
-		emailTextbox.setBounds(160, 295, 200, 20);
+		stateComboBox.setBounds(500, 238, 50, 20);
+		phoneNumberLabel = new JLabel("Phone Number");
+		phoneNumberLabel.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		phoneNumberLabel.setBounds(30, 303, 150, 15);
+		phoneTextbox = new JTextField();
+		phoneTextbox.setBounds(160, 300, 200, 20);
 
 		// Shipping Address Label
 		shippingAddressLabel = new JLabel("Shipping Address");
 		shippingAddressLabel.setFont(new Font("Arial Black", Font.BOLD, 20));
 		shippingAddressLabel.setForeground(new Color(139, 69, 19));
-		shippingAddressLabel.setBounds(30, 180, 200, 50);
+		shippingAddressLabel.setBounds(30, 160, 200, 50);
 
 		// CartSummary, Subtotal, Tax and Total Label
-		cartSummaryLabel = new JLabel("Cart Summary: Items");
+		cartSummaryLabel = new JLabel("Cart Summary: " + ProductsInCart.getTotalItemsInCart() + " Items");
 		cartSummaryLabel.setFont(new Font("Arial Black", Font.BOLD, 15));
-		cartSummaryLabel.setBounds(30, 60, 200, 18);
+		cartSummaryLabel.setBounds(30, 60, 250, 18);
 		subTotalLabel = new JLabel("Subtotal: " + String.format("%.2f", ProductsInCart.getCartSubtotal()));
 		subTotalLabel.setFont(new Font("Arial Black", Font.BOLD, 15));
 		subTotalLabel.setBounds(30, 85, 200, 18);
 		taxLabel = new JLabel("Tax: " + String.format("%.2f", ProductsInCart.getCalculatedTax()));
 		taxLabel.setFont(new Font("Arial Black", Font.BOLD, 15));
 		taxLabel.setBounds(30, 110, 200, 18);
-		totalLabel = new JLabel("Total: " + String.format("%.2f", ProductsInCart.getCalculatedTax() + ProductsInCart.getCartSubtotal()));
+		totalLabel = new JLabel("Total: "
+				+ String.format("%.2f", ProductsInCart.getCalculatedTax() + ProductsInCart.getCartSubtotal()));
 		totalLabel.setFont(new Font("Arial Black", Font.BOLD, 15));
 		totalLabel.setBounds(30, 135, 200, 18);
 
@@ -183,8 +196,8 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 		centerPanel.add(postalTextBox);
 		centerPanel.add(stateLabel);
 		centerPanel.add(stateComboBox);
-		centerPanel.add(emailAddressLabel);
-		centerPanel.add(emailTextbox);
+		centerPanel.add(phoneNumberLabel);
+		centerPanel.add(phoneTextbox);
 		centerPanel.add(paymentLabel);
 		centerPanel.add(paymentMethodLabel);
 		centerPanel.add(creditCardButton);
@@ -244,4 +257,115 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 		}
 
 	}
+
+	// helper method that will check if all the required field to checkout are all
+	// filled. Returns true if all the fields are filled.
+	private boolean checkFields() {
+		boolean areAllFieldFilled = false;
+
+		// If one of the textbox doesn't have any entry on it, the label of that textbox
+		// will turn red meaning the user needs to enter a valid entry
+		if (streetAddTextBox.getText().length() <= 0) {
+			streetAddressLabel.setForeground(Color.red);
+		} else {
+			streetAddressLabel.setForeground(Color.black);
+		}
+
+		if (cityTextBox.getText().length() <= 0) {
+			cityLabel.setForeground(Color.red);
+		} else {
+			cityLabel.setForeground(Color.black);
+		}
+
+		if (postalTextBox.getText().length() <= 0) {
+			postalLabel.setForeground(Color.red);
+		} else {
+			postalLabel.setForeground(Color.black);
+		}
+
+		// I added a try-catch with this one because the user might enter something that
+		// does not a number
+		try {
+			Integer.parseInt(phoneTextbox.getText());
+			if (phoneTextbox.getText().length() <= 0) {
+				phoneNumberLabel.setForeground(Color.red);
+			} else {
+				phoneNumberLabel.setForeground(Color.black);
+			}
+		} catch (NumberFormatException ex) {
+			phoneNumberLabel.setForeground(Color.red);
+		}
+
+		if (buttonGroup.getSelection() == null) {
+			paymentMethodLabel.setForeground(Color.red);
+		} else {
+			paymentMethodLabel.setForeground(Color.black);
+		}
+
+		// if all the textboxes are filled, this method will return true
+		if (streetAddTextBox.getText().length() > 0 && cityTextBox.getText().length() > 0
+				&& postalTextBox.getText().length() > 0 && phoneTextbox.getText().length() > 0
+				&& buttonGroup.getSelection() != null)
+			areAllFieldFilled = true;
+		return areAllFieldFilled;
+
+	}
+
+	// helper method to validate credit card. Returns true if the inputs on credit
+	// card are valid
+	private boolean validateCreditCard() {
+		boolean isCreditCardValid = false;
+		boolean isNameValid = false;
+		boolean isCreditCardNumberValid = false;
+		boolean isCreditCardExpDateValid = false;
+		boolean isCreditCardCVVValid = false;
+
+		// checking if the user entered a name in the credit card name textbox
+		// If invalid, the Name on Credit card label will turn red meaning the user
+		// needs to enter a valid one.
+		if (nameTextBox.getText().length() > 0) {
+			isNameValid = true;
+			nameOnCreditCardLabel.setForeground(Color.black);
+		} else
+			nameOnCreditCardLabel.setForeground(Color.red);
+
+		// checking if the user entered a valid credit card number. Might throw an
+		// exception if the user enter a string instead of a long.
+		// If invalid, the Credit Card Number label will turn red meaning the user
+		// needs to enter a valid one.
+		try {
+			isCreditCardNumberValid = CreditCard.validateCreditCardNumber(Long.parseLong(creditCardTexBox.getText()));
+			if (!isCreditCardNumberValid) {
+				creditCardNumberLabel.setForeground(Color.red);
+			} else
+				creditCardNumberLabel.setForeground(Color.black);
+		} catch (NumberFormatException ex) {
+			creditCardNumberLabel.setForeground(Color.red);
+		}
+
+		// checking if the user entered a valid credit card expiry date in format
+		// "MM/YY".
+		// If invalid, the Credit Card Expiry Date label will turn red meaning the user
+		// needs to enter a valid one.
+		isCreditCardExpDateValid = CreditCard.validateCardExpiryDate(expiryTextBox.getText());
+		if (!isCreditCardExpDateValid) {
+			expiryDateLabel.setForeground(Color.red);
+		} else
+			expiryDateLabel.setForeground(Color.black);
+
+		// checking if the user entered a valid CVV number.
+		// If invalid, the Credit Card CVV label will turn red meaning the user
+		// needs to enter a valid one.
+		isCreditCardCVVValid = CreditCard.validateCVVNumber(cvvTextBox.getText());
+		if (!isCreditCardCVVValid) {
+			cvvLabel.setForeground(Color.red);
+		} else
+			cvvLabel.setForeground(Color.black);
+
+		// if all the entries are valid, this method will return true.
+		if (isNameValid && isCreditCardNumberValid && isCreditCardExpDateValid && isCreditCardCVVValid)
+			isCreditCardCVVValid = true;
+		return isCreditCardCVVValid;
+	}
+
 }
