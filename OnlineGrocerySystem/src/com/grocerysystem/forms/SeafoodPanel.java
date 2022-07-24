@@ -5,12 +5,19 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import com.grocerysystem.classes.Product;
+import com.grocerysystem.classes.ProductsInCart;
 
 public class SeafoodPanel extends JPanel {
 
@@ -21,6 +28,7 @@ public class SeafoodPanel extends JPanel {
 			salmonPattiesPanel;
 	JButton salmonFilletsBttn, halibutFilletsBttn, codFilletsBttn, ahiTunaBttn, imitCrabBttn, crustedCodBttn,
 			salmonPattiesBttn;
+	List<Product> products = Product.getProductList();
 
 	public SeafoodPanel() {
 		// Salmon PattiesButton
@@ -29,6 +37,33 @@ public class SeafoodPanel extends JPanel {
 		salmonPattiesBttn.setFocusable(false);
 		salmonPattiesBttn.setForeground(new Color(210, 105, 30));
 		salmonPattiesBttn.setBackground(Color.white);
+		salmonPattiesBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Salmon Patties")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// Salmon PattiesIcon, Label and Price
 		ImageIcon salmonPattiesIcon = new ImageIcon(getClass().getResource("/images/SalmonPatties.jpg"));
@@ -40,7 +75,7 @@ public class SeafoodPanel extends JPanel {
 		salmonPatties.setFont(new Font("Arial Black", Font.BOLD, 15));
 		salmonPattiesPrice = new JLabel("$12.99/4pcs");
 
-		// Salmon PattiesPanel
+		// Salmon Patties Panel
 		salmonPattiesPanel = new JPanel();
 		salmonPattiesPanel.setVisible(true);
 		salmonPattiesPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
@@ -50,14 +85,41 @@ public class SeafoodPanel extends JPanel {
 		salmonPattiesPanel.add(salmonPattiesBttn);
 		salmonPattiesPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 5));
 
-		// Crusted CodButton
+		// Crusted Cod Button
 		crustedCodBttn = new JButton("Add to Cart");
 		crustedCodBttn.setVisible(true);
 		crustedCodBttn.setFocusable(false);
 		crustedCodBttn.setForeground(new Color(210, 105, 30));
 		crustedCodBttn.setBackground(Color.white);
+		crustedCodBttn.addActionListener(new ActionListener() {
 
-		// Crusted CodIcon, Label and Price
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Crusted Cod")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
+
+		// Crusted Cod Icon, Label and Price
 		ImageIcon crustedCodIcon = new ImageIcon(getClass().getResource("/images/CrustedCod.jpg"));
 		crustedCodIcon.setImage(crustedCodIcon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
 		crustedCod = new JLabel("Crusted Cod");
@@ -83,6 +145,34 @@ public class SeafoodPanel extends JPanel {
 		imitCrabBttn.setFocusable(false);
 		imitCrabBttn.setForeground(new Color(210, 105, 30));
 		imitCrabBttn.setBackground(Color.white);
+		imitCrabBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Imitation Crab")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
+
 
 		// Imitation Crab Icon, Label and Price
 		ImageIcon imitCrabIcon = new ImageIcon(getClass().getResource("/images/ImitationCrab.jpg"));
@@ -110,6 +200,33 @@ public class SeafoodPanel extends JPanel {
 		ahiTunaBttn.setFocusable(false);
 		ahiTunaBttn.setForeground(new Color(210, 105, 30));
 		ahiTunaBttn.setBackground(Color.white);
+		ahiTunaBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Ahi Tuna")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// Ahi Tuna Icon, Label and Price
 		ImageIcon ahiTunaIcon = new ImageIcon(getClass().getResource("/images/AhiTuna.jpg"));
@@ -137,6 +254,33 @@ public class SeafoodPanel extends JPanel {
 		codFilletsBttn.setFocusable(false);
 		codFilletsBttn.setForeground(new Color(210, 105, 30));
 		codFilletsBttn.setBackground(Color.white);
+		codFilletsBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Cod Fillets")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// Cod Fillets Icon, Label and Price
 		ImageIcon codFilletsIcon = new ImageIcon(getClass().getResource("/images/CodFillets.jpg"));
@@ -164,6 +308,33 @@ public class SeafoodPanel extends JPanel {
 		halibutFilletsBttn.setFocusable(false);
 		halibutFilletsBttn.setForeground(new Color(210, 105, 30));
 		halibutFilletsBttn.setBackground(Color.white);
+		halibutFilletsBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Halibut Fillets")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// halibutFillets Icon, Label and Price
 		ImageIcon halibutFilletsIcon = new ImageIcon(getClass().getResource("/images/HalibutFillets.jpg"));
@@ -191,6 +362,33 @@ public class SeafoodPanel extends JPanel {
 		salmonFilletsBttn.setFocusable(false);
 		salmonFilletsBttn.setForeground(new Color(210, 105, 30));
 		salmonFilletsBttn.setBackground(Color.white);
+		salmonFilletsBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Salmon Fillets")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// salmonFillets Icon, Label and Price
 		ImageIcon salmonFilletsIcon = new ImageIcon(getClass().getResource("/images/SalmonFillets.jpg"));

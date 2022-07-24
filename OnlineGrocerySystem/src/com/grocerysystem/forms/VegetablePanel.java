@@ -5,12 +5,19 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import com.grocerysystem.classes.Product;
+import com.grocerysystem.classes.ProductsInCart;
 
 public class VegetablePanel extends JPanel {
 	
@@ -18,7 +25,7 @@ public class VegetablePanel extends JPanel {
 	JLabel romaineHeartsPrice, broccoliPrice, lettucePrice, pepperPrice, asparagusPrice, onionPrice, gingerPrice;
 	JPanel romaineHeartsPanel, broccoliPanel, lettucePanel, pepperPanel, asparagusPanel, onionPanel, gingerPanel;
 	JButton romaineHeartsBttn, broccoliBttn, lettuceBttn, pepperBttn, asparagusBttn, onionBttn, gingerBttn;
-
+	List<Product> products = Product.getProductList();
 
 	public VegetablePanel() {
 		// Ginger Button
@@ -27,6 +34,34 @@ public class VegetablePanel extends JPanel {
 		gingerBttn.setFocusable(false);
 		gingerBttn.setForeground(new Color(210, 105, 30));
 		gingerBttn.setBackground(Color.white);
+		gingerBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Ginger")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
+		
 
 		// Ginger Icon, Label and Price
 		ImageIcon gingerIcon = new ImageIcon(getClass().getResource("/images/Ginger.jpg"));
@@ -54,6 +89,34 @@ public class VegetablePanel extends JPanel {
 		onionBttn.setFocusable(false);
 		onionBttn.setForeground(new Color(210, 105, 30));
 		onionBttn.setBackground(Color.white);
+		onionBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Onion")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
+		
 
 		// Onion Icon, Label and Price
 		ImageIcon onionIcon = new ImageIcon(getClass().getResource("/images/Onion.jpg"));
@@ -81,6 +144,33 @@ public class VegetablePanel extends JPanel {
 		asparagusBttn.setFocusable(false);
 		asparagusBttn.setForeground(new Color(210, 105, 30));
 		asparagusBttn.setBackground(Color.white);
+		asparagusBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Asparagus")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// Asparagus Icon, Label and Price
 		ImageIcon asparagusIcon = new ImageIcon(getClass().getResource("/images/Asparagus.jpg"));
@@ -108,6 +198,33 @@ public class VegetablePanel extends JPanel {
 		pepperBttn.setFocusable(false);
 		pepperBttn.setForeground(new Color(210, 105, 30));
 		pepperBttn.setBackground(Color.white);
+		pepperBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Pepper")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// Pepper Icon, Label and Price
 		ImageIcon pepperIcon = new ImageIcon(getClass().getResource("/images/Pepper.jpg"));
@@ -135,6 +252,33 @@ public class VegetablePanel extends JPanel {
 		lettuceBttn.setFocusable(false);
 		lettuceBttn.setForeground(new Color(210, 105, 30));
 		lettuceBttn.setBackground(Color.white);
+		lettuceBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Lettuce")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// Lettuce Icon, Label and Price
 		ImageIcon lettuceIcon = new ImageIcon(getClass().getResource("/images/Lettuce.jpg"));
@@ -162,6 +306,33 @@ public class VegetablePanel extends JPanel {
 		broccoliBttn.setFocusable(false);
 		broccoliBttn.setForeground(new Color(210, 105, 30));
 		broccoliBttn.setBackground(Color.white);
+		broccoliBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Broccoli")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// Broccoli Icon, Label and Price
 		ImageIcon broccoliIcon = new ImageIcon(getClass().getResource("/images/Broccoli.jpg"));
@@ -189,6 +360,33 @@ public class VegetablePanel extends JPanel {
 		romaineHeartsBttn.setFocusable(false);
 		romaineHeartsBttn.setForeground(new Color(210, 105, 30));
 		romaineHeartsBttn.setBackground(Color.white);
+		romaineHeartsBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Romaine Hearts")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// Romaine Hearts Icon, Label and Price
 		ImageIcon romaineHeartsIcon = new ImageIcon(getClass().getResource("/images/RomaineHearts.jpg"));

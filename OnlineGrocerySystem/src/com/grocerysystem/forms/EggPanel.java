@@ -5,12 +5,19 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import com.grocerysystem.classes.Product;
+import com.grocerysystem.classes.ProductsInCart;
 
 public class EggPanel extends JPanel {
 
@@ -21,6 +28,7 @@ public class EggPanel extends JPanel {
 			plantBasedEggPanel;
 	JButton whiteEggs30Bttn, whiteEggs12Bttn, brownEggs12Bttn, eggWhitesBttn, saltedDuckEggsBttn, pickledEggsBttn,
 			plantBasedEggBttn;
+	List<Product> products = Product.getProductList();
 
 	public EggPanel() {
 		// Plant Based Eggs Button
@@ -29,6 +37,33 @@ public class EggPanel extends JPanel {
 		plantBasedEggBttn.setFocusable(false);
 		plantBasedEggBttn.setForeground(new Color(210, 105, 30));
 		plantBasedEggBttn.setBackground(Color.white);
+		plantBasedEggBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Plant Based Eggs")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// Plant Based Eggs Icon, Label and Price
 		ImageIcon plantBasedEggIcon = new ImageIcon(getClass().getResource("/images/PlantBasedEgg.jpg"));
@@ -56,6 +91,34 @@ public class EggPanel extends JPanel {
 		pickledEggsBttn.setFocusable(false);
 		pickledEggsBttn.setForeground(new Color(210, 105, 30));
 		pickledEggsBttn.setBackground(Color.white);
+		pickledEggsBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Pickled Eggs")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
+
 
 		// Pickled Eggs Icon, Label and Price
 		ImageIcon pickledEggsIcon = new ImageIcon(getClass().getResource("/images/PickledEggs.jpg"));
@@ -83,6 +146,34 @@ public class EggPanel extends JPanel {
 		saltedDuckEggsBttn.setFocusable(false);
 		saltedDuckEggsBttn.setForeground(new Color(210, 105, 30));
 		saltedDuckEggsBttn.setBackground(Color.white);
+		saltedDuckEggsBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Salted Duck Eggs")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
+
 
 		// Salted Duck Eggs Icon, Label and Price
 		ImageIcon saltedDuckEggsIcon = new ImageIcon(getClass().getResource("/images/SaltedDuckEggs.jpg"));
@@ -110,6 +201,34 @@ public class EggPanel extends JPanel {
 		eggWhitesBttn.setFocusable(false);
 		eggWhitesBttn.setForeground(new Color(210, 105, 30));
 		eggWhitesBttn.setBackground(Color.white);
+		eggWhitesBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Egg Whites")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
+
 
 		// Egg Whites Icon, Label and Price
 		ImageIcon eggWhitesIcon = new ImageIcon(getClass().getResource("/images/EggWhites.jpg"));
@@ -137,6 +256,33 @@ public class EggPanel extends JPanel {
 		brownEggs12Bttn.setFocusable(false);
 		brownEggs12Bttn.setForeground(new Color(210, 105, 30));
 		brownEggs12Bttn.setBackground(Color.white);
+		eggWhitesBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Brown Eggs, 12")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// Brown Eggs 12 Icon, Label and Price
 		ImageIcon brownEggs12Icon = new ImageIcon(getClass().getResource("/images/BrownEggs12.jpg"));
@@ -164,6 +310,33 @@ public class EggPanel extends JPanel {
 		whiteEggs12Bttn.setFocusable(false);
 		whiteEggs12Bttn.setForeground(new Color(210, 105, 30));
 		whiteEggs12Bttn.setBackground(Color.white);
+		whiteEggs12Bttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("White Eggs, 12")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// White Eggs 12 Icon, Label and Price
 		ImageIcon whiteEggs12Icon = new ImageIcon(getClass().getResource("/images/WhiteEggs12.jpg"));
@@ -191,6 +364,33 @@ public class EggPanel extends JPanel {
 		whiteEggs30Bttn.setFocusable(false);
 		whiteEggs30Bttn.setForeground(new Color(210, 105, 30));
 		whiteEggs30Bttn.setBackground(Color.white);
+		whiteEggs30Bttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("White Eggs, 30")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// White Eggs 30 Icon, Label and Price
 		ImageIcon whiteEggs30Icon = new ImageIcon(getClass().getResource("/images/WhiteEggs30.jpg"));

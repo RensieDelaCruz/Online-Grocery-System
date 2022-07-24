@@ -5,12 +5,19 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import com.grocerysystem.classes.Product;
+import com.grocerysystem.classes.ProductsInCart;
 
 public class DairyPanel extends JPanel {
 	
@@ -18,6 +25,7 @@ public class DairyPanel extends JPanel {
 	JLabel saltedButterPrice, unsaltedButterPrice, margarinePrice, milk2Price, skimMilk1Price, coffeeCreamPrice, cheddarCheesePrice;
 	JPanel saltedButterPanel, unsaltedButterPanel, margarinePanel, milk2Panel, skimMilk1Panel, coffeeCreamPanel, cheddarCheesePanel;
 	JButton saltedButterBttn, unsaltedButterBttn, margarineBttn, milk2Bttn, skimMilk1Bttn, coffeeCreamBttn, cheddarCheeseBttn;
+	List<Product> products = Product.getProductList();
 	
 	public DairyPanel() {
 		// Cheddar Cheese Button
@@ -26,6 +34,33 @@ public class DairyPanel extends JPanel {
 		cheddarCheeseBttn.setFocusable(false);
 		cheddarCheeseBttn.setForeground(new Color(210, 105, 30));
 		cheddarCheeseBttn.setBackground(Color.white);
+		cheddarCheeseBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Cheddar Cheese")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// Cheddar Cheese Icon, Label and Price
 		ImageIcon cheddarCheeseIcon = new ImageIcon(getClass().getResource("/images/CheddarCheese.jpg"));
@@ -53,6 +88,33 @@ public class DairyPanel extends JPanel {
 		coffeeCreamBttn.setFocusable(false);
 		coffeeCreamBttn.setForeground(new Color(210, 105, 30));
 		coffeeCreamBttn.setBackground(Color.white);
+		coffeeCreamBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Coffee Cream")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// Coffee Cream Icon, Label and Price
 		ImageIcon coffeeCreamIcon = new ImageIcon(getClass().getResource("/images/CoffeeCream.jpg"));
@@ -80,6 +142,33 @@ public class DairyPanel extends JPanel {
 		skimMilk1Bttn.setFocusable(false);
 		skimMilk1Bttn.setForeground(new Color(210, 105, 30));
 		skimMilk1Bttn.setBackground(Color.white);
+		skimMilk1Bttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("1% Skim Milk")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// 1% Skim Milk Icon, Label and Price
 		ImageIcon skimMilk1Icon = new ImageIcon(getClass().getResource("/images/SkimMilk1%.jpg"));
@@ -107,6 +196,33 @@ public class DairyPanel extends JPanel {
 		milk2Bttn.setFocusable(false);
 		milk2Bttn.setForeground(new Color(210, 105, 30));
 		milk2Bttn.setBackground(Color.white);
+		milk2Bttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("2% Milk")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// 2% Milk Icon, Label and Price
 		ImageIcon milk2Icon = new ImageIcon(getClass().getResource("/images/Milk2%.jpg"));
@@ -134,6 +250,33 @@ public class DairyPanel extends JPanel {
 		margarineBttn.setFocusable(false);
 		margarineBttn.setForeground(new Color(210, 105, 30));
 		margarineBttn.setBackground(Color.white);
+		margarineBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Margarine")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// Margarine Icon, Label and Price
 		ImageIcon margarineIcon = new ImageIcon(getClass().getResource("/images/Margarine.jpg"));
@@ -161,6 +304,34 @@ public class DairyPanel extends JPanel {
 		unsaltedButterBttn.setFocusable(false);
 		unsaltedButterBttn.setForeground(new Color(210, 105, 30));
 		unsaltedButterBttn.setBackground(Color.white);
+		unsaltedButterBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Unsalted Butter")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
+
 
 		// Unsalted Butter Icon, Label and Price
 		ImageIcon unsaltedButterIcon = new ImageIcon(getClass().getResource("/images/UnsaltedButter.jpg"));
@@ -188,6 +359,33 @@ public class DairyPanel extends JPanel {
 		saltedButterBttn.setFocusable(false);
 		saltedButterBttn.setForeground(new Color(210, 105, 30));
 		saltedButterBttn.setBackground(Color.white);
+		saltedButterBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Salted Butter")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// Salted Butter Icon, Label and Price
 		ImageIcon saltedButterIcon = new ImageIcon(getClass().getResource("/images/SaltedButter.jpg"));

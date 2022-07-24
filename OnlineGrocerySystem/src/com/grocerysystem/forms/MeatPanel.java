@@ -28,7 +28,6 @@ public class MeatPanel extends JPanel {
 			tenderloinSteakPanel, wholeChickenPanel;
 	JButton chickenBreastBttn, groundBeefBttn, groundPorkBttn, groundTurkeyBttn, ribeyeSteakBttn, tenderloinSteakBttn,
 			wholeChickenBttn;
-
 	List<Product> products = Product.getProductList();
 
 	public MeatPanel() {
@@ -38,6 +37,33 @@ public class MeatPanel extends JPanel {
 		wholeChickenBttn.setFocusable(false);
 		wholeChickenBttn.setForeground(new Color(210, 105, 30));
 		wholeChickenBttn.setBackground(Color.white);
+		wholeChickenBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Whole Chicken")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// Whole Chicken Icon, Label and Price
 		ImageIcon wholeChickenIcon = new ImageIcon(getClass().getResource("/images/WholeChicken.jpg"));
@@ -65,6 +91,33 @@ public class MeatPanel extends JPanel {
 		tenderloinSteakBttn.setFocusable(false);
 		tenderloinSteakBttn.setForeground(new Color(210, 105, 30));
 		tenderloinSteakBttn.setBackground(Color.white);
+		tenderloinSteakBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Tenderloin Steak")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// Tenderloin Steak Icon, Label and Price
 		ImageIcon tenderloinSteakIcon = new ImageIcon(getClass().getResource("/images/TenderloinSteak.jpg"));
@@ -92,6 +145,33 @@ public class MeatPanel extends JPanel {
 		ribeyeSteakBttn.setFocusable(false);
 		ribeyeSteakBttn.setForeground(new Color(210, 105, 30));
 		ribeyeSteakBttn.setBackground(Color.white);
+		ribeyeSteakBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Ribeye Steak")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// Ribeye Steak Icon, Label and Price
 		ImageIcon ribeyeSteakIcon = new ImageIcon(getClass().getResource("/images/RibeyeSteak.jpg"));
@@ -119,6 +199,33 @@ public class MeatPanel extends JPanel {
 		chickenBreastBttn.setFocusable(false);
 		chickenBreastBttn.setForeground(new Color(210, 105, 30));
 		chickenBreastBttn.setBackground(Color.white);
+		chickenBreastBttn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Chicken Breast")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
 
 		// Chicken Breast Icon, Label and Price
 		ImageIcon chickenBreastIcon = new ImageIcon(getClass().getResource("/images/ChickenBreast.jpg"));
@@ -146,8 +253,35 @@ public class MeatPanel extends JPanel {
 		groundTurkeyBttn.setFocusable(false);
 		groundTurkeyBttn.setForeground(new Color(210, 105, 30));
 		groundTurkeyBttn.setBackground(Color.white);
+		groundTurkeyBttn.addActionListener(new ActionListener() {
 
-		// Ground Pork Icon, Label and Price
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int qty = 0;
+				String input = null;
+				ProductsInCart pic = null;
+				try {
+					input = JOptionPane.showInputDialog(null, "Enter Quantity");
+					if (input != null) {
+						qty = Integer.parseInt(input);
+						for (Product p : products) {
+							if (p.getProductName().equals("Ground Turkey")) {
+								pic = new ProductsInCart(p.getProductID(), p.getProductName(), p.getProductDepartment(),
+										p.getProductPrice(), qty);
+							}
+						}
+						ProductsInCart.addToCart(pic);
+					}
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
+							JOptionPane.ERROR_MESSAGE);
+
+				}
+
+			}
+		});
+
+		// Ground Turkey Icon, Label and Price
 		ImageIcon groundTurkeyIcon = new ImageIcon(getClass().getResource("/images/GroundTurkey.jpg"));
 		groundTurkeyIcon.setImage(groundTurkeyIcon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
 		groundTurkey = new JLabel("Ground Turkey");
@@ -192,7 +326,7 @@ public class MeatPanel extends JPanel {
 						}
 						ProductsInCart.addToCart(pic);
 					}
-				} catch (Exception ex) {
+				} catch (NumberFormatException ex) {
 					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
 							JOptionPane.ERROR_MESSAGE);
 
@@ -246,7 +380,7 @@ public class MeatPanel extends JPanel {
 						}
 						ProductsInCart.addToCart(pic);
 					}
-				} catch (Exception ex) {
+				} catch (NumberFormatException ex) {
 					JOptionPane.showMessageDialog(null, "Please enter a valid Number", "Invalid",
 							JOptionPane.ERROR_MESSAGE);
 
