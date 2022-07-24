@@ -223,6 +223,25 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 		if(e.getSource() == cancelButton) {
 			this.setVisible(false);
 			MainForm.getInstance().setVisible(true);
-		}	
+		}
+
+		if (e.getSource() == checkOutButton) {
+			boolean allFieldsFilled = checkFields();
+			try {
+				if (buttonGroup.getSelection().getActionCommand().equals("Credit Card")) {
+					boolean isCreditCardValid = validateCreditCard();
+					if (allFieldsFilled && isCreditCardValid) {
+						System.out.println("checkout with credit card success");
+					}
+				} else if (buttonGroup.getSelection().getActionCommand().equals("Cash On Delivery")) {
+					if (allFieldsFilled)
+						System.out.println("checkout with cash success");
+				}
+
+			} catch (NullPointerException ex) {
+				paymentMethodLabel.setForeground(Color.red);
+			}
+		}
+
 	}
 }
