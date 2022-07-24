@@ -411,7 +411,7 @@ public class VegetablePanel extends JPanel {
 		// Vegetable Panel
 		this.setVisible(true);
 		this.setBackground(Color.white);
-		this.setPreferredSize(new Dimension(100, 1200));
+		this.setPreferredSize(new Dimension(100, 700));
 		this.setLayout(new FlowLayout(FlowLayout.LEADING, 30, 30));
 
 		this.add(romaineHeartsPanel);
