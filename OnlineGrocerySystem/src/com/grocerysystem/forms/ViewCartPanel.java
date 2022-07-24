@@ -24,7 +24,6 @@ public class ViewCartPanel extends JPanel {
 
 	static DefaultTableModel model;
 	static Object[] row;
-	
 
 	public ViewCartPanel() {
 		// Checkout Button
