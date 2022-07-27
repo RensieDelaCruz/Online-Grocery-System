@@ -11,7 +11,7 @@ import java.util.List;
 public class Order {
 
 	private Payment paymentMethod;
-	private int orderID;
+	private int orderID, customerID, paymentID, totalItemsInCart;
 	private double orderTotalPrice;
 	private String street, city, state, postal;
 	private List<ProductsInCart> productsInCart;
