@@ -12,10 +12,12 @@ import java.util.Calendar;
 
 public class CashOnDelivery extends Payment {
 
-	private double amountRemainingBalance, amountRecieved, amountChange;
-	
-	@Override
-	public void collectPayment() {
+	private double amount;
+	private LocalDate date;
+	private Timestamp timeStamp;
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private Calendar cal = Calendar.getInstance();
+	private int paymentID;
 
 	public CashOnDelivery(double amount) {
 		this.amount = amount;
