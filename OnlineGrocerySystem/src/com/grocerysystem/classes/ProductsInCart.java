@@ -11,7 +11,9 @@ public class ProductsInCart {
 
 	private int productID, quantity;
 	private String productName, productDepartment;
-	private double productPrice, subtotal;
+	private double productPrice, subtotal, totalPrice;
+
+
 	private static double cartSubTotal;
 	private static List<ProductsInCart> productsInCart = new ArrayList<>();
 
@@ -93,8 +95,17 @@ public class ProductsInCart {
 		}
 		return numberOfItemsInCart;
 	}
+	
+	public static void clearCart() {
+		productsInCart.removeAll(productsInCart);
+		updateCartSubtotal();
+	}
 
 	// getters and setters
+
+	public static double getTotalPrice() {
+		return cartSubTotal + getCalculatedTax();
+	}
 
 	// method to get the ProductsInCart List
 	public static List getProductsInCart() {
