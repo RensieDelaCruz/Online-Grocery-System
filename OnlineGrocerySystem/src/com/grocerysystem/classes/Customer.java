@@ -28,6 +28,31 @@ public class Customer implements User {
 
 	}
 
+	// method to check login credentials
+	// this method will return true if the user will enter a matching registered
+	// username and password, hence, a successful login
+	@Override
+	public boolean verifyLogin(String userName, String userPassword) {
+		boolean valid = false;
+		try (Connection conn = DatabaseConnect.getConnection()) {
+			String query = "SELECT * FROM user WHERE username = ? AND password = ? AND user_type = 'C'";
+			PreparedStatement stmt = conn.prepareStatement(query);
+			stmt.setString(1, userName);
+			stmt.setString(2, userPassword);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next())
+				valid = true;
+
+		} catch (SQLException e) {
+			valid = false;
+		}
+
+		if (valid) {
+			currentUser(userName, userPassword);
+		}
+		return valid;
+	}
+
 	// method to register a new user
 	// In this method, I created a new entry in user table in the database first
 	// because the user table has a user_id column which is the primary ID and set
@@ -118,30 +143,6 @@ public class Customer implements User {
 		return isEmailValid;
 	}
 
-	// method to check login credentials
-	// this method will return true if the user will enter a matching registered
-	// username and password, hence, a successful login
-	@Override
-	public boolean verifyLogin(String userName, String userPassword) {
-		boolean valid = false;
-		try (Connection conn = DatabaseConnect.getConnection()) {
-			String query = "SELECT * FROM user WHERE username = ? AND password = ? AND user_type = 'C'";
-			PreparedStatement stmt = conn.prepareStatement(query);
-			stmt.setString(1, userName);
-			stmt.setString(2, userPassword);
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next())
-				valid = true;
-
-		} catch (SQLException e) {
-			valid = false;
-		}
-
-		if (valid) {
-			currentUser(userName, userPassword);
-		}
-		return valid;
-	}
 
 	// this method will get the current user's info from the database
 	private void currentUser(String username, String password) {
@@ -152,6 +153,7 @@ public class Customer implements User {
 			stmt.setString(2, password);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
+				userID = rs.getInt("user_id");
 				firstName = rs.getString("first_name");
 				lastName = rs.getString("last_name");
 				customerStreetAddress = rs.getString("street_address");
