@@ -7,19 +7,77 @@ import java.util.regex.Pattern;
 public class CreditCard extends Payment {
 
 	private String nameOnCreditCard;
-	private int creditCardNum, creditCardCVV;
-	private LocalDate creditCardExpDate;
+	private int creditCardCVV, paymentID;
+	private long creditCardNum;
+	private String creditCardExpDate;
+	private double amount;
+	private LocalDate date;
+	private Timestamp timeStamp;
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private Calendar cal = Calendar.getInstance();
 
-	@Override
-	public void collectPayment() {
+	// constructor
+	public CreditCard(double amount, String nameOnCreditCard, long creditCardNum, String creditCardExpDate,
+			int creditCardCVV) {
+		this.amount = amount;
+		this.nameOnCreditCard = nameOnCreditCard;
+		this.creditCardNum = creditCardNum;
+		this.creditCardExpDate = creditCardExpDate;
+		this.creditCardCVV = creditCardCVV;
+		this.date = LocalDate.now();
+		this.timeStamp = new Timestamp(cal.getTimeInMillis());
 
 	}
 
-	
+	// This method will record the credit card info in the database and will return
+	// the payment ID that will be given automatically by the database
+	@Override
+	public int collectPayment() {
+		try (Connection conn = DatabaseConnect.getConnection()) {
+			// first, insert payment info into payment table to generate an auto-increment
+			// payment id that will bne use to other tables
+			String insertPayment = "INSERT INTO payment(payment_type, date, time_stamp) VALUES (?,?,?)";
+			PreparedStatement stmt1 = conn.prepareStatement(insertPayment);
+			stmt1.setString(1, "C");
+			stmt1.setDate(2, Date.valueOf(date));
+			stmt1.setString(3, sdf.format(timeStamp));
+			stmt1.execute();
+
+			// get the the generated payment id
+			String getPaymentID = "SELECT payment_id FROM payment WHERE payment_type = ? AND date = ? AND time_stamp = ? ";
+			PreparedStatement stmt2 = conn.prepareStatement(getPaymentID);
+			stmt2.setString(1, "C");
+			stmt2.setDate(2, Date.valueOf(date));
+			stmt2.setString(3, sdf.format(timeStamp));
+			ResultSet rs = stmt2.executeQuery();
+			while (rs.next()) {
+				paymentID = rs.getInt("payment_id");
+			}
+
+			// insert info in credit card table with the payment id we got from entering
+			// data in payment table. This is designed so that when someone views the
+			// database, it's easier for them to identify which payment is for which
+			// transaction
+			String insertQuery = "INSERT INTO payment_creditcard(payment_id, name_on_creditcard, creditcard_no, exp_date, cvv, amount) VALUES(?,?,?,?,?,?)";
+			PreparedStatement stmt3 = conn.prepareStatement(insertQuery);
+			stmt3.setInt(1, paymentID);
+			stmt3.setString(2, nameOnCreditCard);
+			stmt3.setLong(3, creditCardNum);
+			stmt3.setString(4, creditCardExpDate);
+			stmt3.setInt(5, creditCardCVV);
+			stmt3.setDouble(6, amount);
+			stmt3.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return paymentID;
+	}
+
 	/*
 	 * The following code uses Luhn Algorithm to check Credit Card Number
 	 */
-	
+
 	// Return true if the card number is valid
 	public static boolean validateCreditCardNumber(long cnumber) {
 		return (thesize(cnumber) >= 13 && thesize(cnumber) <= 16) && (prefixmatch(cnumber, 4) || prefixmatch(cnumber, 5)
