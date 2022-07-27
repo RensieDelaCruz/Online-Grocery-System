@@ -71,13 +71,13 @@ public class ProductsInCart {
 				MainForm.subTotalLabel.setText("Subtotal: " + String.format("%.2f", getCartSubtotal()));
 				ViewCartPanel.subTotalLabel.setText("Subtotal: " + String.format("%.2f", getCartSubtotal()));
 				ViewCartPanel.taxLabel.setText("Tax: " + String.format("%.2f", getCalculatedTax()));
-				ViewCartPanel.totalLabel.setText("Total: " + String.format("%.2f", getCalculatedTax() + getCartSubtotal()));
+				ViewCartPanel.totalLabel.setText("Total: " + String.format("%.2f", ProductsInCart.getTotalPrice()));
 			}
 		} else {
 			MainForm.subTotalLabel.setText("Subtotal: " + String.format("%.2f", getCartSubtotal()));
 			ViewCartPanel.subTotalLabel.setText("Subtotal: " + String.format("%.2f", getCartSubtotal()));
 			ViewCartPanel.taxLabel.setText("Tax: " + String.format("%.2f", getCalculatedTax()));
-			ViewCartPanel.totalLabel.setText("Total: " + String.format("%.2f", getCalculatedTax() + getCartSubtotal()));
+			ViewCartPanel.totalLabel.setText("Total: " + String.format("%.2f", ProductsInCart.getTotalPrice()));
 		}
 	}
 	
