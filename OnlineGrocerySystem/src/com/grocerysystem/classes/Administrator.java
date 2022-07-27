@@ -7,7 +7,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 public class Administrator implements User {
-
+	
+	private int userID;
 	private String firstName, lastName, emailAddress;
 	private static Administrator admin;
 	
@@ -49,6 +50,7 @@ public class Administrator implements User {
 			stmt.setString(2, userPassword);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
+				userID = rs.getInt("user_id");
 				firstName = rs.getString("first_name");
 				lastName = rs.getString("last_name");
 				emailAddress = rs.getString("company_email");
