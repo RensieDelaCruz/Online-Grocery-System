@@ -2,6 +2,6 @@ package com.grocerysystem.classes;
 
 public abstract class Payment {
 	
-	public abstract void collectPayment();
+	public abstract int collectPayment();
 
 }
