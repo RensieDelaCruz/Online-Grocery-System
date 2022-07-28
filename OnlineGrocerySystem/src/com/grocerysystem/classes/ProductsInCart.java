@@ -108,7 +108,7 @@ public class ProductsInCart {
 	}
 
 	// method to get the ProductsInCart List
-	public static List getProductsInCart() {
+	public static List<ProductsInCart> getProductsInCart() {
 		return productsInCart;
 	}
 
