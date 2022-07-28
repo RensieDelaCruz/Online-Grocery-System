@@ -244,11 +244,34 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 				if (buttonGroup.getSelection().getActionCommand().equals("Credit Card")) {
 					boolean isCreditCardValid = validateCreditCard();
 					if (allFieldsFilled && isCreditCardValid) {
-						System.out.println("checkout with credit card success");
+						Payment creditCard = new CreditCard(ProductsInCart.getTotalPrice(), nameTextBox.getText(),
+								Long.parseLong(creditCardTexBox.getText()), expiryTextBox.getText(),
+								Integer.parseInt(cvvTextBox.getText()));
+						Order order = new Order(Customer.getInstance().getUserID(), ProductsInCart.getTotalPrice(),
+								creditCard, ProductsInCart.getProductsInCart(), streetAddTextBox.getText(),
+								cityTextBox.getText(), postalTextBox.getText(),
+								stateComboBox.getSelectedItem().toString(), Long.parseLong(phoneTextbox.getText()),
+								ProductsInCart.getTotalItemsInCart());
+						order.checkout();
+						JOptionPane.showMessageDialog(null, "Your Order has been placed!", "Successful",
+								JOptionPane.PLAIN_MESSAGE);
+						this.dispose();
+						MainForm.getInstance().setVisible(true);
 					}
 				} else if (buttonGroup.getSelection().getActionCommand().equals("Cash On Delivery")) {
-					if (allFieldsFilled)
-						System.out.println("checkout with cash success");
+					if (allFieldsFilled){
+						Payment cashOnDelivery = new CashOnDelivery(ProductsInCart.getTotalPrice());
+						Order order = new Order(Customer.getInstance().getUserID(), ProductsInCart.getTotalPrice(),
+								cashOnDelivery, ProductsInCart.getProductsInCart(), streetAddTextBox.getText(),
+								cityTextBox.getText(), postalTextBox.getText(),
+								stateComboBox.getSelectedItem().toString(), Long.parseLong(phoneTextbox.getText()),
+								ProductsInCart.getTotalItemsInCart());
+						order.checkout();
+						JOptionPane.showMessageDialog(null, "Your Order has been placed!", "Successful",
+								JOptionPane.PLAIN_MESSAGE);
+						this.dispose();
+						MainForm.getInstance().setVisible(true);
+					}
 				}
 
 			} catch (NullPointerException ex) {
@@ -286,7 +309,7 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 		// I added a try-catch with this one because the user might enter something that
 		// does not a number
 		try {
-			Integer.parseInt(phoneTextbox.getText());
+			Long.parseLong(phoneTextbox.getText());
 			if (phoneTextbox.getText().length() <= 0) {
 				phoneNumberLabel.setForeground(Color.red);
 			} else {
