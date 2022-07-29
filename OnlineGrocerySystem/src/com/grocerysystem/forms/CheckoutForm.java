@@ -394,7 +394,7 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 		// if all the entries are valid, this method will return true.
 		if (isNameValid && isCreditCardNumberValid && isCreditCardExpDateValid && isCreditCardCVVValid)
 			isCreditCardCVVValid = true;
-		return isCreditCardCVVValid;
+		return isCreditCardValid;
 	}
 
 }
