@@ -280,8 +280,6 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 
 			} catch (NullPointerException ex) {
 				paymentMethodLabel.setForeground(Color.red);
-			}catch (NumberFormatException e2) {
-				phoneNumberLabel.setForeground(Color.red);
 			}
 		}
 
@@ -314,12 +312,14 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 
 		// I added a try-catch with this one because the user might enter something that
 		// does not a number
+		boolean isPhoneValid = false;
 		try {
-			Long.parseLong(phoneTextbox.getText());
-			if (phoneTextbox.getText().length() <= 0) {
-				phoneNumberLabel.setForeground(Color.red);
-			} else {
+			if (phoneTextbox.getText().length() > 0) {
 				phoneNumberLabel.setForeground(Color.black);
+				Long.parseLong(phoneTextbox.getText());
+				isPhoneValid = true;
+			} else {
+				phoneNumberLabel.setForeground(Color.red);
 			}
 		} catch (NumberFormatException ex) {
 			phoneNumberLabel.setForeground(Color.red);
@@ -333,7 +333,7 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 
 		// if all the textboxes are filled, this method will return true
 		if (streetAddTextBox.getText().length() > 0 && cityTextBox.getText().length() > 0
-				&& postalTextBox.getText().length() > 0 && phoneTextbox.getText().length() > 0
+				&& postalTextBox.getText().length() > 0 && isPhoneValid
 				&& buttonGroup.getSelection() != null)
 			areAllFieldFilled = true;
 		return areAllFieldFilled;
