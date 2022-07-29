@@ -280,6 +280,8 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 
 			} catch (NullPointerException ex) {
 				paymentMethodLabel.setForeground(Color.red);
+			}catch (NumberFormatException e2) {
+				phoneNumberLabel.setForeground(Color.red);
 			}
 		}
 
