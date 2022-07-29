@@ -24,6 +24,7 @@ import javax.swing.border.BevelBorder;
 
 import com.grocerysystem.classes.Administrator;
 import com.grocerysystem.classes.Customer;
+import com.grocerysystem.classes.OrderHistory;
 import com.grocerysystem.classes.Product;
 import com.grocerysystem.classes.ProductsInCart;
 import com.grocerysystem.classes.User;
@@ -34,7 +35,7 @@ public class MainForm extends JFrame implements ActionListener {
 	private JLabel departmentsLabel;
 	public static JLabel subTotalLabel;
 	private JButton meatsBttn, seafoodBttn, fruitsBttn, veggiesBttn, dairyBttn, eggBttn, viewCartBttn,
-			viewOrderHistoryBttn;
+			viewOrderHistoryBttn, logoutBttn;
 	private JScrollPane meatScrollPane, seafoodScrollPane, fruitScrollPane, veggiesScrollPane, dairyScrollPane,
 			eggScrollPane;
 	private CardLayout cards;
@@ -149,6 +150,15 @@ public class MainForm extends JFrame implements ActionListener {
 		meatsBttn.addActionListener(this);
 
 		// Header Panel components
+		logoutBttn = new JButton("Logout");
+		logoutBttn.setBackground(Color.white);
+		logoutBttn.setForeground(new Color(210, 105, 30));
+		logoutBttn.setFocusable(false);
+		logoutBttn.setBorder(BorderFactory.createEtchedBorder(20, Color.GRAY, Color.LIGHT_GRAY));
+		logoutBttn.setBounds(900, 10, 70, 20);
+		logoutBttn.addActionListener(this);
+		logoutBttn.setVisible(true);
+
 		manageBttn = new JButton("Manage");
 		manageBttn.setBackground(Color.white);
 		manageBttn.setForeground(new Color(210, 105, 30));
@@ -199,6 +209,7 @@ public class MainForm extends JFrame implements ActionListener {
 		headerPanel.add(manageBttn);
 		headerPanel.add(subTotalLabel);
 		headerPanel.add(welcomeLabel);
+		headerPanel.add(logoutBttn);
 
 		// Center Panel with cards Layout to change the view if the user click on
 		// certain department
@@ -291,12 +302,19 @@ public class MainForm extends JFrame implements ActionListener {
 		}
 
 		if (e.getSource() == viewOrderHistoryBttn) {
+			OrderHistory.getOrderHistoryList().removeAll(OrderHistory.getOrderHistoryList());
+			OrderHistory.fetchOrderHistory();
 			cards.show(centerPanel, "orderhistory");
 			this.add(centerPanel);
 		}
 
 		if (e.getSource() == manageBttn) {
 			new ManageInventoryForm();
+		}
+		
+		if(e.getSource() == logoutBttn) {
+			new LoginForm();
+			this.dispose();
 		}
 	}
 
