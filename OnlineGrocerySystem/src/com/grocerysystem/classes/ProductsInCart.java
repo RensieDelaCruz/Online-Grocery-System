@@ -11,7 +11,7 @@ public class ProductsInCart {
 
 	private int productID, quantity;
 	private String productName, productDepartment;
-	private double productPrice, subtotal, totalPrice;
+	private double productPrice, subtotal;
 
 
 	private static double cartSubTotal;
