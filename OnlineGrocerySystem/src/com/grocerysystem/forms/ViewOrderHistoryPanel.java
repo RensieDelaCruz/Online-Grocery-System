@@ -18,13 +18,11 @@ public class ViewOrderHistoryPanel extends JPanel {
 
 	public ViewOrderHistoryPanel() {
 		// Cart Table
-		String[] columnNames = new String[] { "Order Number", "Date", "Status", "Ship Date",
-				"Number of Items", "Total Price" };
-		DefaultTableModel model = new DefaultTableModel();
-		model.setColumnIdentifiers(columnNames);
+		ViewOrderHistoryModel model = new ViewOrderHistoryModel();
 		orderHistoryTable = new JTable(model);
+		orderHistoryTable.getColumnModel().getColumn(5).setPreferredWidth(300);
 		JScrollPane tableSP = new JScrollPane(orderHistoryTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		tableSP.setBounds(30, 60, 700, 400);
 
 		// Order History Panel
