@@ -256,7 +256,7 @@ public class EggPanel extends JPanel {
 		brownEggs12Bttn.setFocusable(false);
 		brownEggs12Bttn.setForeground(new Color(210, 105, 30));
 		brownEggs12Bttn.setBackground(Color.white);
-		eggWhitesBttn.addActionListener(new ActionListener() {
+		brownEggs12Bttn.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
