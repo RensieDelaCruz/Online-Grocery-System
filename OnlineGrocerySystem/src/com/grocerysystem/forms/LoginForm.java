@@ -146,7 +146,6 @@ public class LoginForm extends JFrame implements ActionListener {
 				boolean isCorrect = false;
 				isCorrect = user.verifyLogin(userTextBox.getText(), String.valueOf(passwordTextBox.getPassword()));
 				if (isCorrect) {
-					
 					new MainForm(user).manageBttn.setVisible(true);
 					this.dispose();
 				} else {
@@ -154,6 +153,7 @@ public class LoginForm extends JFrame implements ActionListener {
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
+			Product.fetchProducts();
 		}
 		
 		if(e.getSource() == registerButton) {
