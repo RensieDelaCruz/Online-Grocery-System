@@ -303,7 +303,12 @@ public class MainForm extends JFrame implements ActionListener {
 
 		if (e.getSource() == viewOrderHistoryBttn) {
 			OrderHistory.getOrderHistoryList().removeAll(OrderHistory.getOrderHistoryList());
-			OrderHistory.fetchOrderHistory();
+			if (user instanceof Customer) {
+				OrderHistory.fetchOrderHistory(Customer.getInstance().getUserID());
+			}else if(user instanceof Administrator) {
+				OrderHistory.fetchOrderHistory(Administrator.getInstance().getUserID());
+			}
+
 			cards.show(centerPanel, "orderhistory");
 			this.add(centerPanel);
 		}
@@ -311,8 +316,8 @@ public class MainForm extends JFrame implements ActionListener {
 		if (e.getSource() == manageBttn) {
 			new ManageInventoryForm();
 		}
-		
-		if(e.getSource() == logoutBttn) {
+
+		if (e.getSource() == logoutBttn) {
 			new LoginForm();
 			this.dispose();
 		}
