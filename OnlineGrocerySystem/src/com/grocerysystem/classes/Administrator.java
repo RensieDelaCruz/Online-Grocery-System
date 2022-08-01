@@ -12,6 +12,9 @@ public class Administrator implements User {
 	private String firstName, lastName, emailAddress;
 	private static Administrator admin;
 	
+	private String firstName, lastName, emailAddress;
+	private int userID;
+	
 	public static Administrator getInstance() {
 		if(admin == null)
 			admin = new Administrator();
@@ -113,4 +116,37 @@ public class Administrator implements User {
 	}
 
 	
+	public int getUserID() {
+		return userID;
+	}
+
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+
 }
