@@ -16,7 +16,6 @@ public class OrderHistory {
 	private int orderID, numberOfItems;
 	private String status, shippingAddress, date;
 	private double totalPrice;
-	private static User user = LoginForm.getUser();
 
 	private static List<OrderHistory> orderHistoryList = new ArrayList<>();
 
