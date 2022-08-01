@@ -11,10 +11,7 @@ public class Administrator implements User {
 	private int userID;
 	private String firstName, lastName, emailAddress;
 	private static Administrator admin;
-	
-	private String firstName, lastName, emailAddress;
-	private int userID;
-	
+
 	public static Administrator getInstance() {
 		if(admin == null)
 			admin = new Administrator();
