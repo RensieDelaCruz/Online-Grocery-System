@@ -21,12 +21,14 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import com.grocerysystem.classes.Administrator;
 import com.grocerysystem.classes.CashOnDelivery;
 import com.grocerysystem.classes.CreditCard;
 import com.grocerysystem.classes.Customer;
 import com.grocerysystem.classes.Order;
 import com.grocerysystem.classes.Payment;
 import com.grocerysystem.classes.ProductsInCart;
+import com.grocerysystem.classes.User;
 
 public class CheckoutForm extends JFrame implements ItemListener, ActionListener {
 
@@ -40,8 +42,12 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 	private JRadioButton creditCardButton, cashOnDeliveryButton;
 	private ButtonGroup buttonGroup;
 	private JButton checkOutButton, cancelButton;
+	private User user;
+	private Order order;
 
-	public CheckoutForm() {
+	public CheckoutForm(User user) {
+		this.user = user;
+
 		// cancel button
 		cancelButton = new JButton("Cancel");
 		cancelButton.setBackground(Color.white);
@@ -229,7 +235,7 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 		if (e.getSource() == creditCardButton) {
 			if (e.getStateChange() == 1) {
 				creditCardPanel.setVisible(true);
-			}else
+			} else
 				creditCardPanel.setVisible(false);
 		}
 
@@ -237,7 +243,7 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == cancelButton) {
+		if (e.getSource() == cancelButton) {
 			this.setVisible(false);
 			MainForm.getInstance().setVisible(true);
 		}
@@ -251,11 +257,18 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 						Payment creditCard = new CreditCard(ProductsInCart.getTotalPrice(), nameTextBox.getText(),
 								Long.parseLong(creditCardTexBox.getText()), expiryTextBox.getText(),
 								Integer.parseInt(cvvTextBox.getText()));
-						Order order = new Order(Customer.getInstance().getUserID(), ProductsInCart.getTotalPrice(),
-								creditCard, ProductsInCart.getProductsInCart(), streetAddTextBox.getText(),
-								cityTextBox.getText(), postalTextBox.getText(),
-								stateComboBox.getSelectedItem().toString(), Long.parseLong(phoneTextbox.getText()),
-								ProductsInCart.getTotalItemsInCart());
+						if (user instanceof Customer) {
+							order = new Order(Customer.getInstance().getUserID(), ProductsInCart.getTotalPrice(),
+									creditCard, ProductsInCart.getProductsInCart(), streetAddTextBox.getText(),
+									cityTextBox.getText(), postalTextBox.getText(),
+									stateComboBox.getSelectedItem().toString(), Long.parseLong(phoneTextbox.getText()),
+									ProductsInCart.getTotalItemsInCart());
+						} else
+							order = new Order(Administrator.getInstance().getUserID(), ProductsInCart.getTotalPrice(),
+									creditCard, ProductsInCart.getProductsInCart(), streetAddTextBox.getText(),
+									cityTextBox.getText(), postalTextBox.getText(),
+									stateComboBox.getSelectedItem().toString(), Long.parseLong(phoneTextbox.getText()),
+									ProductsInCart.getTotalItemsInCart());
 						order.checkout();
 						JOptionPane.showMessageDialog(null, "Your Order has been placed!", "Successful",
 								JOptionPane.PLAIN_MESSAGE);
@@ -263,13 +276,20 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 						MainForm.getInstance().setVisible(true);
 					}
 				} else if (buttonGroup.getSelection().getActionCommand().equals("Cash On Delivery")) {
-					if (allFieldsFilled){
+					if (allFieldsFilled) {
 						Payment cashOnDelivery = new CashOnDelivery(ProductsInCart.getTotalPrice());
-						Order order = new Order(Customer.getInstance().getUserID(), ProductsInCart.getTotalPrice(),
-								cashOnDelivery, ProductsInCart.getProductsInCart(), streetAddTextBox.getText(),
-								cityTextBox.getText(), postalTextBox.getText(),
-								stateComboBox.getSelectedItem().toString(), Long.parseLong(phoneTextbox.getText()),
-								ProductsInCart.getTotalItemsInCart());
+						if (user instanceof Customer) {
+							order = new Order(Customer.getInstance().getUserID(), ProductsInCart.getTotalPrice(),
+									cashOnDelivery, ProductsInCart.getProductsInCart(), streetAddTextBox.getText(),
+									cityTextBox.getText(), postalTextBox.getText(),
+									stateComboBox.getSelectedItem().toString(), Long.parseLong(phoneTextbox.getText()),
+									ProductsInCart.getTotalItemsInCart());
+						}else
+							order = new Order(Administrator.getInstance().getUserID(), ProductsInCart.getTotalPrice(),
+									cashOnDelivery, ProductsInCart.getProductsInCart(), streetAddTextBox.getText(),
+									cityTextBox.getText(), postalTextBox.getText(),
+									stateComboBox.getSelectedItem().toString(), Long.parseLong(phoneTextbox.getText()),
+									ProductsInCart.getTotalItemsInCart());
 						order.checkout();
 						JOptionPane.showMessageDialog(null, "Your Order has been placed!", "Successful",
 								JOptionPane.PLAIN_MESSAGE);
@@ -333,8 +353,7 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 
 		// if all the textboxes are filled, this method will return true
 		if (streetAddTextBox.getText().length() > 0 && cityTextBox.getText().length() > 0
-				&& postalTextBox.getText().length() > 0 && isPhoneValid
-				&& buttonGroup.getSelection() != null)
+				&& postalTextBox.getText().length() > 0 && isPhoneValid && buttonGroup.getSelection() != null)
 			areAllFieldFilled = true;
 		return areAllFieldFilled;
 
