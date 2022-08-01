@@ -92,16 +92,47 @@ public class Administrator implements User {
 
 	}
 
-	public void createProduct() {
+	public void addProduct(String name, String dept, double price, int qty) {
+		try(Connection conn = DatabaseConnect.getConnection()){
+			String insertQuery = "INSERT INTO products(product_name, department, price, quantity_instock, in_stock, status) VALUES (?, ?, ?, ?, 1, 'pending')";
+			PreparedStatement stmt1 = conn.prepareStatement(insertQuery);
+			stmt1.setString(1, name);
+			stmt1.setString(2, dept);
+			stmt1.setDouble(3, price);
+			stmt1.setInt(4, qty);
+			stmt1.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 	}
 
-	public void updateProduct() {
-
+	public void updateProduct(String name, double price, int qty, int productID) {
+		try(Connection conn = DatabaseConnect.getConnection()){
+			String updateQuery = "UPDATE products SET product_name = ?, price = ?, quantity_instock = ? WHERE product_id = ?";
+			PreparedStatement stmt2 = conn.prepareStatement(updateQuery);
+			stmt2.setString(1, name);
+			stmt2.setDouble(2, price);
+			stmt2.setInt(3, qty);
+			stmt2.setInt(4, productID);
+			stmt2.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public void deleteProduct() {
-
+	public void deleteProduct(int productID) {
+		try(Connection conn = DatabaseConnect.getConnection()){
+			String deleteQuery = "DELETE FROM products WHERE product_id = ?";
+			PreparedStatement stmt3 = conn.prepareStatement(deleteQuery);
+			stmt3.setInt(1, productID);
+			stmt3.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	
