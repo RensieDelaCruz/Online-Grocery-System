@@ -136,7 +136,6 @@ public class LoginForm extends JFrame implements ActionListener {
 				if (isCorrect) {
 					user = Customer.getInstance();
 					new MainForm(user);
-					System.out.println(Customer.getInstance().getUserID());
 					this.dispose();
 				} else {
 					JOptionPane.showMessageDialog(null, "Invalid username or password!", "Invalid",
@@ -148,14 +147,12 @@ public class LoginForm extends JFrame implements ActionListener {
 				isCorrect = user.verifyLogin(userTextBox.getText(), String.valueOf(passwordTextBox.getPassword()));
 				if (isCorrect) {
 					new MainForm(user).manageBttn.setVisible(true);
-					System.out.println(Administrator.getInstance().getUserID());
 					this.dispose();
 				} else {
 					JOptionPane.showMessageDialog(null, "Invalid username or password!", "Invalid",
 							JOptionPane.ERROR_MESSAGE);
 				}
 			}
-			System.out.println(user);
 			Product.fetchProducts();
 		}
 		
