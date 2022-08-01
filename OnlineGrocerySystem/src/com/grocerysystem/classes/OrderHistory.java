@@ -9,15 +9,18 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.grocerysystem.forms.LoginForm;
+
 public class OrderHistory {
 
 	private int orderID, numberOfItems;
 	private String status, shippingAddress, date;
 	private double totalPrice;
+	private static User user = LoginForm.getUser();
 
 	private static List<OrderHistory> orderHistoryList = new ArrayList<>();
 
-	//constructor
+	// constructor
 	public OrderHistory(int orderID, String date, String status, int numberOfItems, double totalPrice,
 			String shippingAddress) {
 		this.orderID = orderID;
@@ -29,16 +32,13 @@ public class OrderHistory {
 	}
 
 	// method that will get the order history data from the database
-	public static void fetchOrderHistory() {
+	public static void fetchOrderHistory(int userID) {
 		try (Connection conn = DatabaseConnect.getConnection()) {
-			String queryOrderHistory = "SELECT order_table.order_no, order_table.order_date, order_table.order_status, "
-					+ "order_table.total_items, order_table.order_total_price, order_shipment.shipping_address "
-					+ "FROM order_table "
-					+ "INNER JOIN user_customer ON user_customer.user_id = order_table.customer_id "
-					+ "INNER JOIN order_shipment ON order_table.order_no = order_shipment.order_id "
-					+ "WHERE user_customer.user_id = ?";
+			String queryOrderHistory = "SELECT user.user_id, order_table.order_no, order_table.order_date, order_table.order_status, order_table.total_items, order_table.order_total_price, order_shipment.shipping_address "
+					+ "FROM order_table " + "INNER JOIN user ON user.user_id = order_table.customer_id "
+					+ "INNER JOIN order_shipment ON order_table.order_no = order_shipment.order_id WHERE user.user_id = ?";
 			PreparedStatement stmt1 = conn.prepareStatement(queryOrderHistory);
-			stmt1.setInt(1, Customer.getInstance().getUserID());
+			stmt1.setInt(1, userID);
 			ResultSet rs = stmt1.executeQuery();
 			while (rs.next()) {
 				orderHistoryList.add(new OrderHistory(rs.getInt("order_no"), rs.getDate("order_date").toString(),
@@ -54,6 +54,7 @@ public class OrderHistory {
 	public static List<OrderHistory> getOrderHistoryList() {
 		return orderHistoryList;
 	}
+	
 
 	// getters and setters
 	public int getOrderID() {
