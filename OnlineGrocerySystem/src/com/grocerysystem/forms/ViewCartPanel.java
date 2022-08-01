@@ -41,7 +41,7 @@ public class ViewCartPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (ProductsInCart.getProductsInCart().size() > 0) {
-					new CheckoutForm();
+					new CheckoutForm(LoginForm.getUser());
 					MainForm.getInstance().setVisible(false);
 				}else
 					JOptionPane.showMessageDialog(null, "Your Cart is Empty!", "Error",
