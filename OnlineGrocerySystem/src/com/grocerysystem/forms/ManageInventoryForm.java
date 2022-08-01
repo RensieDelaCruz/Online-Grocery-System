@@ -6,8 +6,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -15,99 +19,105 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
-public class ManageInventoryForm extends JFrame implements ItemListener {
+import com.grocerysystem.classes.Administrator;
+import com.grocerysystem.classes.Product;
 
-	JPanel headerPanel, centerPanel, tablePanel;
-	JLabel headerPanelLabel, departmentLabel;
-	JComboBox<String> departmentComboBox;
-	JButton addBttn, updateBttn, removeBttn;
-	JTable meatTable, seafoodTable, fruitTable, veggiesTable, dairyTable, eggTable;
-	JScrollPane meatScrollPane, seafoodScrollPane, fruitScrollPane, veggiesScrollPane, dairyScrollPane, eggScrollPane;
-	CardLayout cards;
+public class ManageInventoryForm extends JFrame implements ItemListener, ActionListener, MouseListener {
+
+	private JPanel headerPanel, centerPanel, tablePanel;
+	private JLabel headerPanelLabel, departmentLabel, productID, productName, productPrice, productQuantity;
+	private JComboBox<String> departmentComboBox;
+	private JButton addBttn, updateBttn, removeBttn, closeBttn, resetBttn;
+	private JTable productsTable;
+	private JScrollPane productsScrollPane;
+	private JTextField productIDTxt, productNameTxt, productPriceTxt, productQuantityTxt;
+	private ProductsTableModel model = new ProductsTableModel();
 
 	public ManageInventoryForm() {
-		// Departments tables (I just added one entry for each to demonstrate the functionality of the combobox)
-		String[] columnNames = new String[] { "Product ID", "Product Name", "Product Price", "Quantity", "In Stock" };
-		DefaultTableModel model = new DefaultTableModel();
-		model.setColumnIdentifiers(columnNames);
-		Object[][] meatData = {{"1","Ground Beef", "7.00", "50", "true"}};
-		Object[][] seafoodData = {{"8","seafood", "7.00", "50", "true"}};
-		Object[][] fruitData = {{"16","fruit", "7.00", "50", "true"}};
-		Object[][] veggiesData = {{"24","veggie", "7.00", "50", "true"}};
-		Object[][] dairyData = {{"32","dairy", "7.00", "50", "true"}};
-		Object[][] eggData = {{"40","egg", "7.00", "50", "true"}};
-		meatTable = new JTable(meatData, columnNames);
-		seafoodTable = new JTable(seafoodData, columnNames);
-		fruitTable = new JTable(fruitData, columnNames);
-		veggiesTable = new JTable(veggiesData, columnNames);
-		dairyTable = new JTable(dairyData, columnNames);
-		eggTable = new JTable(eggData, columnNames);
-		
-		// Egg ScrollPane
-		eggScrollPane = new JScrollPane(eggTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+
+		productsTable = new JTable(model);
+		productsTable.addMouseListener(this);
+		productsScrollPane = new JScrollPane(productsTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-		// Dairy ScrollPane
-		dairyScrollPane = new JScrollPane(dairyTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-		// Vegetable ScrollPane
-		veggiesScrollPane = new JScrollPane(veggiesTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-		// Fruit ScrollPane
-		fruitScrollPane = new JScrollPane(fruitTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-		// Seafood ScrollPane
-		seafoodScrollPane = new JScrollPane(seafoodTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-		// Meat ScrollPane
-		meatScrollPane = new JScrollPane(meatTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-		// Table Panel
-		cards = new CardLayout();
 		tablePanel = new JPanel();
-		tablePanel.setLayout(cards);
+		tablePanel.setLayout(new BorderLayout());
 		tablePanel.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
 		tablePanel.setBackground(Color.WHITE);
-		tablePanel.setBounds(20, 80, 940, 400);
-		tablePanel.add(meatScrollPane, "meat");
-		tablePanel.add(seafoodScrollPane, "seafood");
-		tablePanel.add(fruitScrollPane, "fruit");
-		tablePanel.add(veggiesScrollPane, "vegetable");
-		tablePanel.add(dairyScrollPane, "dairy");
-		tablePanel.add(eggScrollPane, "egg");
+		tablePanel.setBounds(20, 200, 940, 300);
+		tablePanel.add(productsScrollPane, BorderLayout.CENTER);
 
-		// Add, Update, Remove Buttons
+		// Product name, price, quantity and in stock inputs.
+		productID = new JLabel("Product ID");
+		productID.setFont(new Font("Arial Black", Font.BOLD, 15));
+		productID.setBounds(30, 80, 250, 18);
+		productIDTxt = new JTextField();
+		productIDTxt.setBounds(200, 80, 150, 18);
+		productIDTxt.setEditable(false);
+		productName = new JLabel("Product Name");
+		productName.setFont(new Font("Arial Black", Font.BOLD, 15));
+		productName.setBounds(30, 110, 250, 18);
+		productNameTxt = new JTextField();
+		productNameTxt.setBounds(200, 110, 150, 18);
+		productPrice = new JLabel("Product Price");
+		productPrice.setFont(new Font("Arial Black", Font.BOLD, 15));
+		productPrice.setBounds(30, 140, 250, 18);
+		productPriceTxt = new JTextField();
+		productPriceTxt.setBounds(200, 140, 150, 18);
+		productQuantity = new JLabel("Product Quantity");
+		productQuantity.setFont(new Font("Arial Black", Font.BOLD, 15));
+		productQuantity.setBounds(30, 170, 250, 18);
+		productQuantityTxt = new JTextField();
+		productQuantityTxt.setBounds(200, 170, 150, 18);
+
+		// Add, Update, Remove and Close Buttons
+		resetBttn = new JButton("Reset");
+		resetBttn.setBackground(Color.white);
+		resetBttn.setForeground(new Color(210, 105, 30));
+		resetBttn.setFocusable(false);
+		resetBttn.setBorder(BorderFactory.createEtchedBorder(20, Color.GRAY, Color.LIGHT_GRAY));
+		resetBttn.setBounds(600, 160, 70, 30);
+		resetBttn.addActionListener(this);
+
 		removeBttn = new JButton("Remove");
 		removeBttn.setBackground(Color.white);
 		removeBttn.setForeground(new Color(210, 105, 30));
 		removeBttn.setFocusable(false);
 		removeBttn.setBorder(BorderFactory.createEtchedBorder(20, Color.GRAY, Color.LIGHT_GRAY));
-		removeBttn.setBounds(780, 30, 70, 20);
+		removeBttn.setBounds(600, 120, 70, 30);
+		removeBttn.addActionListener(this);
 
 		updateBttn = new JButton("Update");
 		updateBttn.setBackground(Color.white);
 		updateBttn.setForeground(new Color(210, 105, 30));
 		updateBttn.setFocusable(false);
 		updateBttn.setBorder(BorderFactory.createEtchedBorder(20, Color.GRAY, Color.LIGHT_GRAY));
-		updateBttn.setBounds(690, 30, 70, 20);
+		updateBttn.setBounds(600, 80, 70, 30);
+		updateBttn.addActionListener(this);
 
 		addBttn = new JButton("Add");
 		addBttn.setBackground(Color.white);
 		addBttn.setForeground(new Color(210, 105, 30));
 		addBttn.setFocusable(false);
 		addBttn.setBorder(BorderFactory.createEtchedBorder(20, Color.GRAY, Color.LIGHT_GRAY));
-		addBttn.setBounds(600, 30, 70, 20);
+		addBttn.setBounds(600, 40, 70, 30);
+		addBttn.addActionListener(this);
+
+		closeBttn = new JButton("Close");
+		closeBttn.setBackground(Color.white);
+		closeBttn.setForeground(new Color(210, 105, 30));
+		closeBttn.setFocusable(false);
+		closeBttn.setBorder(BorderFactory.createEtchedBorder(20, Color.GRAY, Color.LIGHT_GRAY));
+		closeBttn.setBounds(450, 520, 70, 20);
+		closeBttn.addActionListener(this);
 
 		// Department Label and Checkbox
 		final String[] depts = new String[] { "Meats", "Seafoods", "Fruits", "Vegetables", "Dairies", "Eggs" };
@@ -130,7 +140,17 @@ public class ManageInventoryForm extends JFrame implements ItemListener {
 		centerPanel.add(addBttn);
 		centerPanel.add(updateBttn);
 		centerPanel.add(removeBttn);
+		centerPanel.add(resetBttn);
 		centerPanel.add(tablePanel);
+		centerPanel.add(productID);
+		centerPanel.add(productIDTxt);
+		centerPanel.add(productName);
+		centerPanel.add(productNameTxt);
+		centerPanel.add(productPrice);
+		centerPanel.add(productPriceTxt);
+		centerPanel.add(productQuantity);
+		centerPanel.add(productQuantityTxt);
+		centerPanel.add(closeBttn);
 
 		// Header Panel
 		headerPanelLabel = new JLabel("Inventory Manager");
@@ -146,7 +166,7 @@ public class ManageInventoryForm extends JFrame implements ItemListener {
 		headerPanel.add(headerPanelLabel);
 
 		// Manage inventory form
-		ImageIcon mainIcon = new ImageIcon("Cart Icon.jpg");
+		ImageIcon mainIcon = new ImageIcon(getClass().getResource("/images/Cart Icon.jpg"));
 		this.setTitle("Organic Grocery Store - Inventory Manager");
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setSize(1000, 700);
@@ -160,39 +180,168 @@ public class ManageInventoryForm extends JFrame implements ItemListener {
 		this.add(centerPanel, BorderLayout.CENTER);
 	}
 
+	// Entries in the table will change depending on what is selected on the
+	// combobox
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 
-		JComboBox selected = (JComboBox)e.getItemSelectable();
+		JComboBox<String> selected = (JComboBox<String>) e.getItemSelectable();
 		if (selected.getSelectedIndex() == 0) {
-			cards.show(tablePanel, "meat");
-			centerPanel.add(tablePanel);
+			model.updateTable(departmentComboBox.getSelectedItem().toString());
 		}
-		
+
 		if (selected.getSelectedIndex() == 1) {
-			cards.show(tablePanel, "seafood");
-			centerPanel.add(tablePanel);
+			model.updateTable(departmentComboBox.getSelectedItem().toString());
 		}
-		
+
 		if (selected.getSelectedIndex() == 2) {
-			cards.show(tablePanel, "fruit");
-			centerPanel.add(tablePanel);
+			model.updateTable(departmentComboBox.getSelectedItem().toString());
 		}
-		
+
 		if (selected.getSelectedIndex() == 3) {
-			cards.show(tablePanel, "vegetable");
-			centerPanel.add(tablePanel);
+			model.updateTable(departmentComboBox.getSelectedItem().toString());
 		}
-		
+
 		if (selected.getSelectedIndex() == 4) {
-			cards.show(tablePanel, "dairy");
-			centerPanel.add(tablePanel);
+			model.updateTable(departmentComboBox.getSelectedItem().toString());
 		}
-		
+
 		if (selected.getSelectedIndex() == 5) {
-			cards.show(tablePanel, "egg");
-			centerPanel.add(tablePanel);
+			model.updateTable(departmentComboBox.getSelectedItem().toString());
 		}
 
 	}
+
+	// Actions that will happen once a button is pressed in the UI
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == closeBttn) {
+			this.dispose();
+			MainForm.getInstance().setVisible(true);
+		}
+
+		if (e.getSource() == addBttn) {
+			if (validateInputs()) {
+				Administrator.getInstance().addProduct(productNameTxt.getText(),
+						departmentComboBox.getSelectedItem().toString(), Double.parseDouble(productPriceTxt.getText()),
+						Integer.parseInt(productQuantityTxt.getText()));
+				JOptionPane.showMessageDialog(null, "Product Added!", "Successful", JOptionPane.PLAIN_MESSAGE);
+				Product.fetchProducts();
+				model.updateTable(departmentComboBox.getSelectedItem().toString());
+
+				productIDTxt.setText("");
+				productNameTxt.setText("");
+				productPriceTxt.setText("");
+				productQuantityTxt.setText("");
+			}
+		}
+
+		if (e.getSource() == updateBttn) {
+			if (validateInputs()) {
+				Administrator.getInstance().updateProduct(productNameTxt.getText(),
+						Double.parseDouble(productPriceTxt.getText()), Integer.parseInt(productQuantityTxt.getText()),
+						Integer.parseInt(productIDTxt.getText()));
+				JOptionPane.showMessageDialog(null, "Product Updated!", "Successful", JOptionPane.PLAIN_MESSAGE);
+				Product.fetchProducts();
+				model.updateTable(departmentComboBox.getSelectedItem().toString());
+
+				productIDTxt.setText("");
+				productNameTxt.setText("");
+				productPriceTxt.setText("");
+				productQuantityTxt.setText("");
+			}
+		}
+
+		if (e.getSource() == removeBttn) {
+			Administrator.getInstance().deleteProduct(Integer.parseInt(productIDTxt.getText()));
+			JOptionPane.showMessageDialog(null, "Product Deleted!", "Successful", JOptionPane.PLAIN_MESSAGE);
+			Product.fetchProducts();
+			model.updateTable(departmentComboBox.getSelectedItem().toString());
+
+			productIDTxt.setText("");
+			productNameTxt.setText("");
+			productPriceTxt.setText("");
+			productQuantityTxt.setText("");
+		}
+
+		if (e.getSource() == resetBttn) {
+			productIDTxt.setText("");
+			productNameTxt.setText("");
+			productPriceTxt.setText("");
+			productQuantityTxt.setText("");
+		}
+
+	}
+
+	// Mouse Event that will determine which entry is being selected
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		int selectedRow = productsTable.getSelectedRow();
+
+		productIDTxt.setText(model.getValueAt(selectedRow, 0).toString());
+		productNameTxt.setText(model.getValueAt(selectedRow, 1).toString());
+		productPriceTxt.setText(model.getValueAt(selectedRow, 2).toString());
+		productQuantityTxt.setText(model.getValueAt(selectedRow, 3).toString());
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+
+	}
+
+	// helper method that will validate inputs before adding or updateing data in
+	// database
+	private boolean validateInputs() {
+		boolean isValid = false;
+		if (productNameTxt.getText().length() <= 0) {
+			productName.setForeground(Color.red);
+		} else
+			productName.setForeground(Color.black);
+
+		boolean isPriceValid = false;
+		try {
+			if (productPriceTxt.getText().length() > 0) {
+				productPrice.setForeground(Color.black);
+				Double.parseDouble(productPriceTxt.getText());
+				isPriceValid = true;
+			} else {
+				productPrice.setForeground(Color.red);
+			}
+		} catch (NumberFormatException ex) {
+			productPrice.setForeground(Color.red);
+		}
+
+		boolean isQuantityValid = false;
+		try {
+			if (productQuantityTxt.getText().length() > 0) {
+				productQuantity.setForeground(Color.black);
+				Integer.parseInt(productQuantityTxt.getText());
+				isQuantityValid = true;
+			} else {
+				productQuantity.setForeground(Color.red);
+			}
+		} catch (NumberFormatException ex) {
+			productQuantity.setForeground(Color.red);
+		}
+
+		if (productNameTxt.getText().length() > 0 && isPriceValid && isQuantityValid)
+			isValid = true;
+		return isValid;
+	}
+
 }
