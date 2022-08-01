@@ -58,42 +58,17 @@ public class Administrator implements User {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-	}
-	
 
-	public String getFirstName() {
-		return firstName;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getEmailAddress() {
-		return emailAddress;
-	}
-
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
-
-	
 	@Override
 	public void updateAccountInfo() {
 
 	}
 
+	// method that will add a new product to the database and management table
 	public void addProduct(String name, String dept, double price, int qty) {
-		try(Connection conn = DatabaseConnect.getConnection()){
+		try (Connection conn = DatabaseConnect.getConnection()) {
 			String insertQuery = "INSERT INTO products(product_name, department, price, quantity_instock, in_stock, status) VALUES (?, ?, ?, ?, 1, 'pending')";
 			PreparedStatement stmt1 = conn.prepareStatement(insertQuery);
 			stmt1.setString(1, name);
@@ -108,8 +83,9 @@ public class Administrator implements User {
 
 	}
 
+	// method that will update certain product in the database and management table
 	public void updateProduct(String name, double price, int qty, int productID) {
-		try(Connection conn = DatabaseConnect.getConnection()){
+		try (Connection conn = DatabaseConnect.getConnection()) {
 			String updateQuery = "UPDATE products SET product_name = ?, price = ?, quantity_instock = ? WHERE product_id = ?";
 			PreparedStatement stmt2 = conn.prepareStatement(updateQuery);
 			stmt2.setString(1, name);
@@ -117,12 +93,13 @@ public class Administrator implements User {
 			stmt2.setInt(3, qty);
 			stmt2.setInt(4, productID);
 			stmt2.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
+	// method that will delete certain product in the database and management table
 	public void deleteProduct(int productID) {
 		try(Connection conn = DatabaseConnect.getConnection()){
 			String deleteQuery = "DELETE FROM products WHERE product_id = ?";
