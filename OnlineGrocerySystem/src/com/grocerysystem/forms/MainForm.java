@@ -51,7 +51,7 @@ public class MainForm extends JFrame implements ActionListener {
 	private ViewCartPanel viewCartPanel = new ViewCartPanel();
 	private ViewOrderHistoryPanel viewOrderHistoryPanel = new ViewOrderHistoryPanel();
 
-	private User user;
+	private static User user;
 	protected JButton manageBttn;
 	protected JLabel welcomeLabel;
 
@@ -59,7 +59,7 @@ public class MainForm extends JFrame implements ActionListener {
 
 	public MainForm(User user) {
 		main = this;
-		this.user = user;
+		MainForm.user = user;
 
 		// cursor for buttons
 		cursor = new Cursor(Cursor.HAND_CURSOR);
@@ -304,9 +304,9 @@ public class MainForm extends JFrame implements ActionListener {
 		if (e.getSource() == viewOrderHistoryBttn) {
 			OrderHistory.getOrderHistoryList().removeAll(OrderHistory.getOrderHistoryList());
 			if (user instanceof Customer) {
-				OrderHistory.fetchOrderHistory(Customer.getInstance().getUserID());
+				OrderHistory.fetchOrderHistory(((Customer)user).getUserID());
 			}else if(user instanceof Administrator) {
-				OrderHistory.fetchOrderHistory(Administrator.getInstance().getUserID());
+				OrderHistory.fetchOrderHistory(((Administrator)user).getUserID());
 			}
 
 			cards.show(centerPanel, "orderhistory");
