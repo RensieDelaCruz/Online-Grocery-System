@@ -24,7 +24,7 @@ public class RegistrationForm extends JFrame implements ActionListener {
 
 	private JPanel panel;
 	private JLabel pageTitle, userName, userPassword, confirmPassword, firstName, lastName, streetAddress, city,
-			emailAddress, stateLabel, invalidEmail, userAIU, passwordDM;
+			emailAddress, provinceLabel, invalidEmail, userAIU, passwordDM;
 	private JTextField userTextBox, firstNameTextBox, lastNameTextBox, emailAddTextBox, streetAddTextBox, cityTextBox;
 	private JPasswordField passwordTextBox, confirmTextBox;
 	private JComboBox<String> provinceComboBox;
@@ -106,7 +106,7 @@ public class RegistrationForm extends JFrame implements ActionListener {
 		cityTextBox = new JTextField();
 		cityTextBox.setBounds(70, 210, 120, 20);
 
-		// state label and combo box
+		// province label and combo box
 		provinceLabel = new JLabel("Province");
 		provinceLabel.setBounds(200, 210, 120, 20);
 		String[] state = { "NL", "PE", "NS", "NB", "QC", "ON", "MB", "SK", "AB", "BC", "YT", "NT", "NU" };
@@ -187,7 +187,7 @@ public class RegistrationForm extends JFrame implements ActionListener {
 			if(uniqueUsername && passwordMatch && emailValid && allFieldFilled) {
 				customer.register(userTextBox.getText(), String.valueOf(passwordTextBox.getPassword()), 
 						firstNameTextBox.getText(), lastNameTextBox.getText(), streetAddTextBox.getText(), 
-						cityTextBox.getText(), String.valueOf(stateComboBox.getSelectedItem()), emailAddTextBox.getText());
+						cityTextBox.getText(), String.valueOf(provinceComboBox.getSelectedItem()), emailAddTextBox.getText());
 				JOptionPane.showMessageDialog(null, "Registration Successful!", "Successful",
 						JOptionPane.PLAIN_MESSAGE);
 				this.dispose();

@@ -20,7 +20,7 @@ public class Order {
 
 	// constructor
 	public Order(int userID, double orderTotalPrice, Payment paymentMethod, List<ProductsInCart> productsInCart,
-			String street, String city, String postal, String state, long phone, int totalItemsInCart) {
+			String street, String city, String postal, String province, long phone, int totalItemsInCart) {
 		this.userID = userID;
 		this.orderTotalPrice = orderTotalPrice;
 		this.paymentMethod = paymentMethod;
@@ -42,7 +42,7 @@ public class Order {
 			// in other table
 			String insertOrder = "INSERT INTO order_table(customer_id, total_items, order_total_price, order_date, order_status, payment_id) VALUES (?,?,?,?,?,?)";
 			PreparedStatement stmt1 = conn.prepareStatement(insertOrder);
-			stmt1.setInt(1, customerID);
+			stmt1.setInt(1, userID);
 			stmt1.setInt(2, totalItemsInCart);
 			stmt1.setDouble(3, orderTotalPrice);
 			stmt1.setDate(4, Date.valueOf(date));

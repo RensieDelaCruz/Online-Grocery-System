@@ -261,13 +261,13 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 							order = new Order(((Customer) user).getUserID(), ProductsInCart.getTotalPrice(), creditCard,
 									ProductsInCart.getProductsInCart(), streetAddTextBox.getText(),
 									cityTextBox.getText(), postalTextBox.getText(),
-									stateComboBox.getSelectedItem().toString(), Long.parseLong(phoneTextbox.getText()),
+									provinceComboBox.getSelectedItem().toString(), Long.parseLong(phoneTextbox.getText()),
 									ProductsInCart.getTotalItemsInCart());
 						} else if (user instanceof Administrator) {
 							order = new Order(((Administrator) user).getUserID(), ProductsInCart.getTotalPrice(),
 									creditCard, ProductsInCart.getProductsInCart(), streetAddTextBox.getText(),
 									cityTextBox.getText(), postalTextBox.getText(),
-									stateComboBox.getSelectedItem().toString(), Long.parseLong(phoneTextbox.getText()),
+									provinceComboBox.getSelectedItem().toString(), Long.parseLong(phoneTextbox.getText()),
 									ProductsInCart.getTotalItemsInCart());
 						}
 						order.checkout();
@@ -283,13 +283,13 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 							order = new Order(((Customer) user).getUserID(), ProductsInCart.getTotalPrice(),
 									cashOnDelivery, ProductsInCart.getProductsInCart(), streetAddTextBox.getText(),
 									cityTextBox.getText(), postalTextBox.getText(),
-									stateComboBox.getSelectedItem().toString(), Long.parseLong(phoneTextbox.getText()),
+									provinceComboBox.getSelectedItem().toString(), Long.parseLong(phoneTextbox.getText()),
 									ProductsInCart.getTotalItemsInCart());
 						} else if (user instanceof Administrator) {
 							order = new Order(((Administrator) user).getUserID(), ProductsInCart.getTotalPrice(),
 									cashOnDelivery, ProductsInCart.getProductsInCart(), streetAddTextBox.getText(),
 									cityTextBox.getText(), postalTextBox.getText(),
-									stateComboBox.getSelectedItem().toString(), Long.parseLong(phoneTextbox.getText()),
+									provinceComboBox.getSelectedItem().toString(), Long.parseLong(phoneTextbox.getText()),
 									ProductsInCart.getTotalItemsInCart());
 						}
 						order.checkout();
