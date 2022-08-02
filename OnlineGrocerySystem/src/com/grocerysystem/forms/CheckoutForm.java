@@ -34,9 +34,9 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 
 	private JPanel centerPanel, creditCardPanel;
 	private JLabel checkoutLabel, subTotalLabel, taxLabel, totalLabel, cartSummaryLabel, shippingAddressLabel,
-			streetAddressLabel, cityLabel, postalLabel, stateLabel, phoneNumberLabel, paymentLabel, paymentMethodLabel,
+			streetAddressLabel, cityLabel, postalLabel, provinceLabel, phoneNumberLabel, paymentLabel, paymentMethodLabel,
 			creditCardNumberLabel, expiryDateLabel, cvvLabel, nameOnCreditCardLabel;
-	private JComboBox<String> stateComboBox;
+	private JComboBox<String> provinceComboBox;
 	private JTextField streetAddTextBox, cityTextBox, postalTextBox, phoneTextbox, creditCardTexBox, expiryTextBox,
 			cvvTextBox, nameTextBox;
 	private JRadioButton creditCardButton, cashOnDeliveryButton;
@@ -204,8 +204,8 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 		centerPanel.add(cityTextBox);
 		centerPanel.add(postalLabel);
 		centerPanel.add(postalTextBox);
-		centerPanel.add(stateLabel);
-		centerPanel.add(stateComboBox);
+		centerPanel.add(provinceLabel);
+		centerPanel.add(provinceComboBox);
 		centerPanel.add(phoneNumberLabel);
 		centerPanel.add(phoneTextbox);
 		centerPanel.add(paymentLabel);
