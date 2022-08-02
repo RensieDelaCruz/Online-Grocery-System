@@ -27,7 +27,7 @@ public class RegistrationForm extends JFrame implements ActionListener {
 			emailAddress, stateLabel, invalidEmail, userAIU, passwordDM;
 	private JTextField userTextBox, firstNameTextBox, lastNameTextBox, emailAddTextBox, streetAddTextBox, cityTextBox;
 	private JPasswordField passwordTextBox, confirmTextBox;
-	private JComboBox<String> stateComboBox;
+	private JComboBox<String> provinceComboBox;
 	private JButton submitButton, cancelButton;
 	private Customer customer = Customer.getInstance();
 
@@ -107,11 +107,11 @@ public class RegistrationForm extends JFrame implements ActionListener {
 		cityTextBox.setBounds(70, 210, 120, 20);
 
 		// state label and combo box
-		stateLabel = new JLabel("State");
-		stateLabel.setBounds(220, 210, 120, 20);
+		provinceLabel = new JLabel("Province");
+		provinceLabel.setBounds(200, 210, 120, 20);
 		String[] state = { "NL", "PE", "NS", "NB", "QC", "ON", "MB", "SK", "AB", "BC", "YT", "NT", "NU" };
-		stateComboBox = new JComboBox<String>(state);
-		stateComboBox.setBounds(260, 210, 50, 20);
+		provinceComboBox = new JComboBox<String>(state);
+		provinceComboBox.setBounds(260, 210, 50, 20);
 
 		// submit button
 		submitButton = new JButton("Submit");
@@ -148,8 +148,8 @@ public class RegistrationForm extends JFrame implements ActionListener {
 		panel.add(streetAddTextBox);
 		panel.add(city);
 		panel.add(cityTextBox);
-		panel.add(stateLabel);
-		panel.add(stateComboBox);
+		panel.add(provinceLabel);
+		panel.add(provinceComboBox);
 		panel.add(submitButton);
 		panel.add(cancelButton);
 
