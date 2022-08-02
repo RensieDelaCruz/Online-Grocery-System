@@ -11,24 +11,24 @@ import java.util.List;
 public class Order {
 
 	private Payment paymentMethod;
-	private int orderID, customerID, paymentID, totalItemsInCart;
+	private int orderID, userID, paymentID, totalItemsInCart;
 	private double orderTotalPrice;
-	private String street, city, state, postal;
+	private String street, city, province, postal;
 	private List<ProductsInCart> productsInCart;
 	private long phone;
 	private LocalDate date;
 
 	// constructor
-	public Order(int customerID, double orderTotalPrice, Payment paymentMethod, List<ProductsInCart> productsInCart,
+	public Order(int userID, double orderTotalPrice, Payment paymentMethod, List<ProductsInCart> productsInCart,
 			String street, String city, String postal, String state, long phone, int totalItemsInCart) {
-		this.customerID = customerID;
+		this.userID = userID;
 		this.orderTotalPrice = orderTotalPrice;
 		this.paymentMethod = paymentMethod;
 		this.productsInCart = productsInCart;
 		this.street = street;
 		this.city = city;
 		this.postal = postal;
-		this.state = state;
+		this.province = province;
 		this.phone = phone;
 		this.totalItemsInCart = totalItemsInCart;
 		paymentID = paymentMethod.collectPayment();
@@ -64,7 +64,7 @@ public class Order {
 			String insertShipment = "INSERT INTO order_shipment(order_id, shipping_address, postal_code, phone_number) VALUES (?,?,?,?)";
 			PreparedStatement stmt3 = conn.prepareStatement(insertShipment);
 			stmt3.setInt(1, orderID);
-			stmt3.setString(2, street + " " + city + " " + state);
+			stmt3.setString(2, street + " " + city + " " + province);
 			stmt3.setString(3, postal);
 			stmt3.setLong(4, phone);
 			stmt3.execute();
