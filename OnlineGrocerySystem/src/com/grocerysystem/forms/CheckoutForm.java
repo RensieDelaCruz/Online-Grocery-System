@@ -42,11 +42,11 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 	private JRadioButton creditCardButton, cashOnDeliveryButton;
 	private ButtonGroup buttonGroup;
 	private JButton checkOutButton, cancelButton;
-	private User user;
+	private static User user;
 	private Order order;
 
 	public CheckoutForm(User user) {
-		this.user = user;
+		CheckoutForm.user = user;
 
 		// cancel button
 		cancelButton = new JButton("Cancel");
@@ -148,12 +148,12 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 		postalLabel.setBounds(30, 268, 150, 15);
 		postalTextBox = new JTextField();
 		postalTextBox.setBounds(140, 265, 150, 20);
-		stateLabel = new JLabel("State");
-		stateLabel.setFont(new Font("Arial Black", Font.PLAIN, 15));
-		stateLabel.setBounds(450, 240, 150, 15);
+		provinceLabel = new JLabel("Province");
+		provinceLabel.setFont(new Font("Arial Black", Font.PLAIN, 15));
+		provinceLabel.setBounds(415, 240, 150, 15);
 		String[] state = { "NL", "PE", "NS", "NB", "QC", "ON", "MB", "SK", "AB", "BC", "YT", "NT", "NU" };
-		stateComboBox = new JComboBox<String>(state);
-		stateComboBox.setBounds(500, 238, 50, 20);
+		provinceComboBox = new JComboBox<String>(state);
+		provinceComboBox.setBounds(500, 238, 50, 20);
 		phoneNumberLabel = new JLabel("Phone Number");
 		phoneNumberLabel.setFont(new Font("Arial Black", Font.PLAIN, 15));
 		phoneNumberLabel.setBounds(30, 303, 150, 15);
@@ -258,17 +258,18 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 								Long.parseLong(creditCardTexBox.getText()), expiryTextBox.getText(),
 								Integer.parseInt(cvvTextBox.getText()));
 						if (user instanceof Customer) {
-							order = new Order(Customer.getInstance().getUserID(), ProductsInCart.getTotalPrice(),
+							order = new Order(((Customer) user).getUserID(), ProductsInCart.getTotalPrice(), creditCard,
+									ProductsInCart.getProductsInCart(), streetAddTextBox.getText(),
+									cityTextBox.getText(), postalTextBox.getText(),
+									stateComboBox.getSelectedItem().toString(), Long.parseLong(phoneTextbox.getText()),
+									ProductsInCart.getTotalItemsInCart());
+						} else if (user instanceof Administrator) {
+							order = new Order(((Administrator) user).getUserID(), ProductsInCart.getTotalPrice(),
 									creditCard, ProductsInCart.getProductsInCart(), streetAddTextBox.getText(),
 									cityTextBox.getText(), postalTextBox.getText(),
 									stateComboBox.getSelectedItem().toString(), Long.parseLong(phoneTextbox.getText()),
 									ProductsInCart.getTotalItemsInCart());
-						} else
-							order = new Order(Administrator.getInstance().getUserID(), ProductsInCart.getTotalPrice(),
-									creditCard, ProductsInCart.getProductsInCart(), streetAddTextBox.getText(),
-									cityTextBox.getText(), postalTextBox.getText(),
-									stateComboBox.getSelectedItem().toString(), Long.parseLong(phoneTextbox.getText()),
-									ProductsInCart.getTotalItemsInCart());
+						}
 						order.checkout();
 						JOptionPane.showMessageDialog(null, "Your Order has been placed!", "Successful",
 								JOptionPane.PLAIN_MESSAGE);
@@ -279,17 +280,18 @@ public class CheckoutForm extends JFrame implements ItemListener, ActionListener
 					if (allFieldsFilled) {
 						Payment cashOnDelivery = new CashOnDelivery(ProductsInCart.getTotalPrice());
 						if (user instanceof Customer) {
-							order = new Order(Customer.getInstance().getUserID(), ProductsInCart.getTotalPrice(),
+							order = new Order(((Customer) user).getUserID(), ProductsInCart.getTotalPrice(),
 									cashOnDelivery, ProductsInCart.getProductsInCart(), streetAddTextBox.getText(),
 									cityTextBox.getText(), postalTextBox.getText(),
 									stateComboBox.getSelectedItem().toString(), Long.parseLong(phoneTextbox.getText()),
 									ProductsInCart.getTotalItemsInCart());
-						}else
-							order = new Order(Administrator.getInstance().getUserID(), ProductsInCart.getTotalPrice(),
+						} else if (user instanceof Administrator) {
+							order = new Order(((Administrator) user).getUserID(), ProductsInCart.getTotalPrice(),
 									cashOnDelivery, ProductsInCart.getProductsInCart(), streetAddTextBox.getText(),
 									cityTextBox.getText(), postalTextBox.getText(),
 									stateComboBox.getSelectedItem().toString(), Long.parseLong(phoneTextbox.getText()),
 									ProductsInCart.getTotalItemsInCart());
+						}
 						order.checkout();
 						JOptionPane.showMessageDialog(null, "Your Order has been placed!", "Successful",
 								JOptionPane.PLAIN_MESSAGE);
