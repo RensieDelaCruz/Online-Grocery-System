@@ -52,6 +52,10 @@ CREATE TABLE `user_type` (
   PRIMARY KEY (`user_type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+USE grocerymanagementsystem;
+INSERT INTO `grocerymanagementsystem`.`user_type` (`user_type_id`, `description`) VALUES ('A', 'Administrator');
+INSERT INTO `grocerymanagementsystem`.`user_type` (`user_type_id`, `description`) VALUES ('C', 'Customer');
+
 
 USE grocerymanagementsystem;
 CREATE TABLE `user` (
@@ -100,9 +104,9 @@ CREATE TABLE `order_table` (
   PRIMARY KEY (`order_no`),
   KEY `order_customer_idx` (`customer_id`),
   KEY `order_payment_idx` (`payment_id`),
-  CONSTRAINT `order_customer` FOREIGN KEY (`customer_id`) REFERENCES `user_customer` (`user_id`) ON DELETE CASCADE,
+  CONSTRAINT `order_customer` FOREIGN KEY (`customer_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE,
   CONSTRAINT `order_payment` FOREIGN KEY (`payment_id`) REFERENCES `payment` (`payment_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 USE grocerymanagementsystem;
